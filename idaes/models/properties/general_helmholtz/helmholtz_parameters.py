@@ -151,11 +151,13 @@ class WriteParameters(object):
         # Check if a predefined form of the ideal part of Helmholtz free energy is used
         try:
             phi_ideal = {"phii": 0, "phii_d": 0, "phii_dd": 0, "phii_t": 0, "phii_tt": 0, "phii_dt": 0}
-            phi_ideal_types = parameters["eos"]["phi_ideal_types"]
-            if phi_ideal_types:
-                for ideal_type in phi_ideal_types:
-                    phi_expressions = phi_ideal_modular_parts[ideal_type](
-                        model=self.model, parameters=parameters
+            phi_ideal_terms = parameters["eos"]["ideal_terms"]
+            # print(phi_ideal_terms)
+            if phi_ideal_terms:
+                for ideal_term in phi_ideal_terms:
+                    print(ideal_term["ideal_type"])
+                    phi_expressions = phi_ideal_modular_parts[ideal_term["ideal_type"]](
+                        model=self.model, parameters=ideal_term
                     )
                     for key in phi_ideal.keys():
                         phi_ideal[key] = phi_ideal[key] + phi_expressions[key]
@@ -166,12 +168,12 @@ class WriteParameters(object):
 
         # Check if a predefined form of the residual part of Helmholtz free energy is used
         try:
-            phi_residual = {"phii": 0, "phii_d": 0, "phii_dd": 0, "phii_t": 0, "phii_tt": 0, "phii_dt": 0}
-            phi_residual_types = parameters["eos"]["phi_residual_types"]
-            if phi_residual_types:
-                for residual_type in phi_residual_types:
-                    phi_expressions = phi_residual_modular_parts[residual_type](
-                        model=self.model, parameters=parameters
+            phi_residual = {"phir": 0, "phir_d": 0, "phir_dd": 0, "phir_t": 0, "phir_tt": 0, "phir_dt": 0}
+            phi_residual_terms = parameters["eos"]["residual_terms"]
+            if phi_residual_terms:
+                for residual_term in phi_residual_terms:
+                    phi_expressions = phi_residual_modular_parts[residual_term["residual_type"]](
+                        model=self.model, parameters=residual_term
                     )
                     for key in phi_residual.keys():
                         phi_residual[key] = phi_residual[key] + phi_expressions[key]

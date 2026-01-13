@@ -35,7 +35,7 @@ from .phi_ideal_expressions import (
 from .phi_residual_expressions import(
     phi_residual_expressions_exponential_reduced_density,
     phi_residual_expressions_exponential_reduced_density_reciprocal_reduced_temperature,
-    phi_residual_expressions_exponentials_delta_tau,
+    phi_residual_expressions_exponential_delta_tau,
     phi_residual_expressions_gaussian,
     phi_residual_expressions_power,
     phi_residual_expressions_non_analytic,
@@ -72,7 +72,7 @@ phi_residual_modular_parts = {
     1: phi_residual_expressions_power,
     2: phi_residual_expressions_exponential_reduced_density,
     3: phi_residual_expressions_exponential_reduced_density_reciprocal_reduced_temperature,
-    4: phi_residual_expressions_exponentials_delta_tau,
+    4: phi_residual_expressions_exponential_delta_tau,
     5: phi_residual_expressions_gaussian,
     6: phi_residual_expressions_non_analytic,
 }

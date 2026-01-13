@@ -28,14 +28,14 @@ def phi_ideal_expressions_lead(model, parameters):
     Returns:
         dict: Expressions for lead part of ideal Helmholtz free energy
     """
-    n0 = parameters["eos"]["n0"]
+    a = parameters["a"]
     return {
         "phii": pyo.log(model.delta)
-        + n0[1]
-        + n0[2] * model.tau,
+        + a[1]
+        + a[2] * model.tau,
         "phii_d": 1.0 / model.delta,
         "phii_dd": -1.0 / model.delta**2,
-        "phii_t": n0[2],
+        "phii_t": a[2],
         "phii_tt": 0,
         "phii_dt": 0,
     }
@@ -50,13 +50,13 @@ def phi_ideal_expressions_logtau(model, parameters):
     Returns:
         dict: Expressions for logtau part of ideal Helmholtz free energy
     """
-    n0 = parameters["eos"]["n0"]
+    a = parameters["a"]
     return {
-        "phii": n0[3] * pyo.log(model.tau),
+        "phii": a[3] * pyo.log(model.tau),
         "phii_d": 0,
         "phii_dd": 0,
-        "phii_t": n0[3] / model.tau,
-        "phii_tt": -n0[3] / model.tau**2,
+        "phii_t": a[3] / model.tau,
+        "phii_tt": -a[3] / model.tau**2,
         "phii_dt": 0,
     }
 
@@ -70,16 +70,17 @@ def phi_ideal_expressions_planck_einstein1(model, parameters):
     Returns:
         dict: Expressions for first Planck Einstein part of ideal Helmholtz free energy
     """
-    last_term = parameters["eos"]["last_term_ideal"]
-    n0 = parameters["eos"]["n0"]
-    g0 = parameters["eos"]["g0"]
-    rng = range(4, last_term + 1)##Need to evaluate range
+    start_term = parameters["start_term"]
+    last_term = parameters["last_term"]
+    a = parameters["a"]
+    g = parameters["g"]
+    rng = range(start_term, last_term + 1)
     return {
-        "phii": sum(n0[i] * pyo.log(1 - pyo.exp(-g0[i] * model.tau)) for i in rng),
+        "phii": sum(a[i] * pyo.log(1 - pyo.exp(-g[i] * model.tau)) for i in rng),
         "phii_d": 0,
         "phii_dd": 0,
-        "phii_t": sum(n0[i] * g0[i] / (pyo.exp(g0[i] * model.tau) - 1) for i in rng),
-        "phii_tt": -sum(n0[i] * g0[i] ** 2 * pyo.exp(-g0[i] * model.tau) / (1 - pyo.exp(-g0[i] * model.tau)) ** 2 for i in rng),
+        "phii_t": sum(a[i] * g[i] / (pyo.exp(g[i] * model.tau) - 1) for i in rng),
+        "phii_tt": -sum(a[i] * g[i] ** 2 * pyo.exp(-g[i] * model.tau) / (1 - pyo.exp(-g[i] * model.tau)) ** 2 for i in rng),
         "phii_dt": 0,
     }
 
