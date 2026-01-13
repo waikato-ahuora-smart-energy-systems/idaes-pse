@@ -283,8 +283,8 @@
         },
         "last_term_ideal": 8,
         "last_term_residual": [7, 51, 54],
-        "phi_ideal_type": 1,
-        "phi_residual_type": 2
+        "phi_ideal_types": [1,2,3],
+        "phi_residual_types": [1,2,5]
     },
     "aux": {
         "reference": [

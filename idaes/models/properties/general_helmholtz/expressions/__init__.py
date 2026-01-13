@@ -13,6 +13,7 @@
 
 __author__ = "John Eslick"
 
+
 from .phi_ideal_type01 import phi_ideal_expressions_type01
 from .phi_ideal_type02 import phi_ideal_expressions_type02
 from .phi_ideal_type03 import phi_ideal_expressions_type03
@@ -22,6 +23,23 @@ from .phi_residual_type03 import phi_residual_expressions_type03
 from .phi_residual_type04 import phi_residual_expressions_type04
 from .surface_tension_type01 import surface_tension_type01
 from .sat_delta_approx import sat_delta_type01, sat_delta_type02, sat_delta_type03
+from .phi_ideal_expressions import (
+    phi_ideal_expressions_lead,
+    phi_ideal_expressions_logtau,
+    phi_ideal_expressions_planck_einstein1,
+    phi_ideal_expressions_planck_einstein2,
+    phi_ideal_expressions_cp_constant,
+    phi_ideal_expressions_power,
+    phi_ideal_expressions_AlyLee
+)
+from .phi_residual_expressions import(
+    phi_residual_expressions_exponential_reduced_density,
+    phi_residual_expressions_exponential_reduced_density_reciprocal_reduced_temperature,
+    phi_residual_expressions_exponentials_delta_tau,
+    phi_residual_expressions_gaussian,
+    phi_residual_expressions_power,
+    phi_residual_expressions_non_analytic,
+)
 
 phi_residual_types = {
     0: None,  # custom
@@ -36,6 +54,27 @@ phi_ideal_types = {
     1: phi_ideal_expressions_type01,
     2: phi_ideal_expressions_type02,
     3: phi_ideal_expressions_type03,
+}
+
+phi_ideal_modular_parts = {
+    0: None, #custom
+    1: phi_ideal_expressions_lead,
+    2: phi_ideal_expressions_logtau,
+    3: phi_ideal_expressions_planck_einstein1,
+    4: phi_ideal_expressions_planck_einstein2,
+    5: phi_ideal_expressions_cp_constant,
+    6: phi_ideal_expressions_power,
+    7: phi_ideal_expressions_AlyLee,
+}
+
+phi_residual_modular_parts = {
+    0: None, #custom
+    1: phi_residual_expressions_power,
+    2: phi_residual_expressions_exponential_reduced_density,
+    3: phi_residual_expressions_exponential_reduced_density_reciprocal_reduced_temperature,
+    4: phi_residual_expressions_exponentials_delta_tau,
+    5: phi_residual_expressions_gaussian,
+    6: phi_residual_expressions_non_analytic,
 }
 
 delta_sat_types = {
