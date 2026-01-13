@@ -29,21 +29,19 @@ def phi_residual_expressions_power(model, parameters):
         dict: Expressions for  part of residual Helmholtz free energy
     """
 
-    start_term = parameters["start_term"]
-    last_term = parameters["last_term"]
-    rng = range(start_term, last_term + 1)
     n = parameters["n"]
     t = parameters["t"]
     d = parameters["d"]
+    rng = range(0, len(n))
 
     return {
-        "phir": sum(n[i] * model.delta ** d[i] * model.tau ** t[i] for i in rng[0]),
-        "phir_d": sum(n[i] * d[i] * model.delta ** (d[i] - 1) * model.tau ** t[i] for i in rng[0]),
+        "phir": sum(n[i] * model.delta ** d[i] * model.tau ** t[i] for i in rng),
+        "phir_d": sum(n[i] * d[i] * model.delta ** (d[i] - 1) * model.tau ** t[i] for i in rng),
         "phir_dd": sum(
             n[i] * d[i] * (d[i] - 1) * model.delta ** (d[i] - 2) * model.tau ** t[i]
             for i in rng
         ),
-        "phir_t": sum(n[i] * t[i] * model.delta ** d[i] * model.tau ** (t[i] - 1) for i in rng[0]),
+        "phir_t": sum(n[i] * t[i] * model.delta ** d[i] * model.tau ** (t[i] - 1) for i in rng),
         "phir_tt": sum(
             n[i] * t[i] * (t[i] - 1) * model.delta ** d[i] * model.tau ** (t[i] - 2)
             for i in rng
@@ -64,16 +62,14 @@ def phi_residual_expressions_gaussian(model, parameters):
     Returns:
         dict: Expressions for  part of residual Helmholtz free energy
     """
-    start_term = parameters["start_term"]
-    last_term = parameters["last_term"]
-    rng = range(start_term, last_term + 1)
-    n = parameters["eos"]["n"]
-    t = parameters["eos"]["t"]
-    d = parameters["eos"]["d"]
-    a = parameters["eos"]["a"]
-    b = parameters["eos"]["b"]
-    e = parameters["eos"]["e"]
-    g = parameters["eos"]["g"]
+    n = parameters["n"]
+    t = parameters["t"]
+    d = parameters["d"]
+    a = parameters["a"]
+    b = parameters["b"]
+    e = parameters["e"]
+    g = parameters["g"]
+    rng = range(0, len(n))
     return {
         "phir": sum(
             n[i]
@@ -342,14 +338,12 @@ def phi_residual_expressions_exponential_reduced_density(model, parameters):
 
     Returns:
         dict: Expressions for  part of residual Helmholtz free energy
-    """
-    start_term = parameters["start_term"]
-    last_term = parameters["last_term"]
-    rng = range(start_term, last_term + 1)    
+    """   
     n = parameters["n"]
     t = parameters["t"]
     d = parameters["d"]
     c = parameters["c"]
+    rng = range(0, len(n))
     return {
         "phir": sum(
             n[i]

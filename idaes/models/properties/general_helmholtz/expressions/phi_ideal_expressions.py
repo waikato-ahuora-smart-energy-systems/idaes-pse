@@ -31,11 +31,11 @@ def phi_ideal_expressions_lead(model, parameters):
     a = parameters["a"]
     return {
         "phii": pyo.log(model.delta)
-        + a[1]
-        + a[2] * model.tau,
+        + a[0]
+        + a[1] * model.tau,
         "phii_d": 1.0 / model.delta,
         "phii_dd": -1.0 / model.delta**2,
-        "phii_t": a[2],
+        "phii_t": a[1],
         "phii_tt": 0,
         "phii_dt": 0,
     }
@@ -52,11 +52,11 @@ def phi_ideal_expressions_logtau(model, parameters):
     """
     a = parameters["a"]
     return {
-        "phii": a[3] * pyo.log(model.tau),
+        "phii": a * pyo.log(model.tau),
         "phii_d": 0,
         "phii_dd": 0,
-        "phii_t": a[3] / model.tau,
-        "phii_tt": -a[3] / model.tau**2,
+        "phii_t": a / model.tau,
+        "phii_tt": -a / model.tau**2,
         "phii_dt": 0,
     }
 
@@ -70,11 +70,9 @@ def phi_ideal_expressions_planck_einstein1(model, parameters):
     Returns:
         dict: Expressions for first Planck Einstein part of ideal Helmholtz free energy
     """
-    start_term = parameters["start_term"]
-    last_term = parameters["last_term"]
     a = parameters["a"]
     g = parameters["g"]
-    rng = range(start_term, last_term + 1)
+    rng = range(0, len(a))
     return {
         "phii": sum(a[i] * pyo.log(1 - pyo.exp(-g[i] * model.tau)) for i in rng),
         "phii_d": 0,
@@ -94,26 +92,28 @@ def phi_ideal_expressions_planck_einstein2(model, parameters):
     Returns:
         dict: Expressions for second Planck Einstein part of ideal Helmholtz free energy
     """
-    last_term = parameters["eos"]["last_term_ideal"]
-    n0 = parameters["eos"]["n0"]
-    g0 = parameters["eos"]["g0"]
-    rng = range(4, last_term + 1)
+    start_term = parameters["start_term"]
+    last_term = parameters["last_term"]
+    a = parameters["a"]
+    c = parameters["c"] ##Follow up check to see if we can validate this
+    g = parameters["g"]
+    ##Need to also validate index
     return {
-        "phii": sum(n0[i] * pyo.log(1 - pyo.exp(-g0[i] * model.tau)) for i in rng),
-        "phii_d": 1.0 / model.delta,
-        "phii_dd": -1.0 / model.delta**2,
-        "phii_t": n0[2]
-        + n0[3] / model.tau
-        + sum(n0[i] * g0[i] / (pyo.exp(g0[i] * model.tau) - 1) for i in rng),
-        "phii_tt": -n0[3] / model.tau**2
-        - sum(
-            n0[i]
-            * g0[i] ** 2
-            * pyo.exp(-g0[i] * model.tau)
-            / (1 - pyo.exp(-g0[i] * model.tau)) ** 2
-            for i in rng
-        ),
-        "phii_dt": 0,
+        # "phii": a[0] * pyo.log(c[0]+pyo.exp(-g[0] * model.tau)),
+        # "phii_d": 1.0 / model.delta,
+        # "phii_dd": -1.0 / model.delta**2,
+        # "phii_t": a[0]
+        # + a[3] / model.tau
+        # + sum(a[i] * g[i] / (pyo.exp(g[i] * model.tau) - 1) for i in rng),
+        # "phii_tt": -a[3] / model.tau**2
+        # - sum(
+        #     a[i]
+        #     * g[i] ** 2
+        #     * pyo.exp(-g[i] * model.tau)
+        #     / (1 - pyo.exp(-g[i] * model.tau)) ** 2
+        #     for i in rng
+        # ),
+        # "phii_dt": 0,
     }
 
 def phi_ideal_expressions_cp_constant(model, parameters):

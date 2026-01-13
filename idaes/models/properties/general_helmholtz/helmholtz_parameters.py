@@ -152,16 +152,13 @@ class WriteParameters(object):
         try:
             phi_ideal = {"phii": 0, "phii_d": 0, "phii_dd": 0, "phii_t": 0, "phii_tt": 0, "phii_dt": 0}
             phi_ideal_terms = parameters["eos"]["ideal_terms"]
-            # print(phi_ideal_terms)
             if phi_ideal_terms:
                 for ideal_term in phi_ideal_terms:
-                    print(ideal_term["ideal_type"])
                     phi_expressions = phi_ideal_modular_parts[ideal_term["ideal_type"]](
                         model=self.model, parameters=ideal_term
                     )
                     for key in phi_ideal.keys():
                         phi_ideal[key] = phi_ideal[key] + phi_expressions[key]
-                print(phi_ideal)
                 self.add(phi_ideal)
         except KeyError:
             phi_ideal_type = 0
@@ -177,7 +174,6 @@ class WriteParameters(object):
                     )
                     for key in phi_residual.keys():
                         phi_residual[key] = phi_residual[key] + phi_expressions[key]
-                print(phi_residual)
                 self.add(phi_residual)
         except KeyError:
             phi_residual_type = 0
