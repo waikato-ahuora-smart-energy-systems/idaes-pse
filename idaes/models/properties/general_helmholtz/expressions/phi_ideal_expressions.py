@@ -92,28 +92,16 @@ def phi_ideal_expressions_planck_einstein2(model, parameters):
     Returns:
         dict: Expressions for second Planck Einstein part of ideal Helmholtz free energy
     """
-    start_term = parameters["start_term"]
-    last_term = parameters["last_term"]
     a = parameters["a"]
-    c = parameters["c"] ##Follow up check to see if we can validate this
+    c = parameters["c"]
     g = parameters["g"]
-    ##Need to also validate index
     return {
-        # "phii": a[0] * pyo.log(c[0]+pyo.exp(-g[0] * model.tau)),
-        # "phii_d": 1.0 / model.delta,
-        # "phii_dd": -1.0 / model.delta**2,
-        # "phii_t": a[0]
-        # + a[3] / model.tau
-        # + sum(a[i] * g[i] / (pyo.exp(g[i] * model.tau) - 1) for i in rng),
-        # "phii_tt": -a[3] / model.tau**2
-        # - sum(
-        #     a[i]
-        #     * g[i] ** 2
-        #     * pyo.exp(-g[i] * model.tau)
-        #     / (1 - pyo.exp(-g[i] * model.tau)) ** 2
-        #     for i in rng
-        # ),
-        # "phii_dt": 0,
+        "phii": a * pyo.log(c+pyo.exp(g * model.tau)),
+        "phii_d": 0,
+        "phii_dd":0,
+        "phii_t": a * g * pyo.exp(g * model.tau) / (c * pyo.exp(g * model.tau)),
+        "phii_tt": a * c * g ** 2 * pyo.exp(g * model.tau) / (c + pyo.exp(g * model.tau) ** 2 ),
+        "phii_dt": 0,
     }
 
 def phi_ideal_expressions_cp_constant(model, parameters):
@@ -126,30 +114,15 @@ def phi_ideal_expressions_cp_constant(model, parameters):
     Returns:
         dict: Expressions for cp constant part of ideal Helmholtz free energy
     """
-    last_term = parameters["eos"]["last_term_ideal"]
-    n0 = parameters["eos"]["n0"]
-    g0 = parameters["eos"]["g0"]
-    rng = range(4, last_term + 1)
+    a = parameters["a"]
+    t0 = model.T_Star/model.T_ref
     return {
-        # "phii": pyo.log(model.delta)
-        # + n0[1]
-        # + n0[2] * model.tau
-        # + n0[3] * pyo.log(model.tau)
-        # + sum(n0[i] * pyo.log(1 - pyo.exp(-g0[i] * model.tau)) for i in rng),
-        # "phii_d": 1.0 / model.delta,
-        # "phii_dd": -1.0 / model.delta**2,
-        # "phii_t": n0[2]
-        # + n0[3] / model.tau
-        # + sum(n0[i] * g0[i] / (pyo.exp(g0[i] * model.tau) - 1) for i in rng),
-        # "phii_tt": -n0[3] / model.tau**2
-        # - sum(
-        #     n0[i]
-        #     * g0[i] ** 2
-        #     * pyo.exp(-g0[i] * model.tau)
-        #     / (1 - pyo.exp(-g0[i] * model.tau)) ** 2
-        #     for i in rng
-        # ),
-        # "phii_dt": 0,
+        "phii": a - a * t0 + a * pyo.log(t0),
+        "phii_d": 0,
+        "phii_dd": 0,
+        "phii_t": a * ( 1 / t0 - 1),
+        "phii_tt": -a / t0 ** 2,
+        "phii_dt": 0,
     }
 
 def phi_ideal_expressions_power(model, parameters):
@@ -162,64 +135,14 @@ def phi_ideal_expressions_power(model, parameters):
     Returns:
         dict: Expressions for Power part of ideal Helmholtz free energy
     """
-    last_term = parameters["eos"]["last_term_ideal"]
-    n0 = parameters["eos"]["n0"]
-    g0 = parameters["eos"]["g0"]
-    rng = range(4, last_term + 1)
+    a = parameters["a"]
+    g = parameters["g"]
+    rng = range(0, len(a))
     return {
-        # "phii": pyo.log(model.delta)
-        # + n0[1]
-        # + n0[2] * model.tau
-        # + n0[3] * pyo.log(model.tau)
-        # + sum(n0[i] * pyo.log(1 - pyo.exp(-g0[i] * model.tau)) for i in rng),
-        # "phii_d": 1.0 / model.delta,
-        # "phii_dd": -1.0 / model.delta**2,
-        # "phii_t": n0[2]
-        # + n0[3] / model.tau
-        # + sum(n0[i] * g0[i] / (pyo.exp(g0[i] * model.tau) - 1) for i in rng),
-        # "phii_tt": -n0[3] / model.tau**2
-        # - sum(
-        #     n0[i]
-        #     * g0[i] ** 2
-        #     * pyo.exp(-g0[i] * model.tau)
-        #     / (1 - pyo.exp(-g0[i] * model.tau)) ** 2
-        #     for i in rng
-        # ),
-        # "phii_dt": 0,
-    }
-
-def phi_ideal_expressions_AlyLee(model, parameters):
-    """Type01 expression for the AlyLee part of dimensionless ideal Helmholtz free energy
-
-    Args:
-        model (Block): Pyomo model
-        parameters (dict): Main parameters dictionary
-
-    Returns:
-        dict: Expressions for AlyLee part of ideal Helmholtz free energy
-    """
-    last_term = parameters["eos"]["last_term_ideal"]
-    n0 = parameters["eos"]["n0"]
-    g0 = parameters["eos"]["g0"]
-    rng = range(4, last_term + 1)
-    return {
-        # "phii": pyo.log(model.delta)
-        # + n0[1]
-        # + n0[2] * model.tau
-        # + n0[3] * pyo.log(model.tau)
-        # + sum(n0[i] * pyo.log(1 - pyo.exp(-g0[i] * model.tau)) for i in rng),
-        # "phii_d": 1.0 / model.delta,
-        # "phii_dd": -1.0 / model.delta**2,
-        # "phii_t": n0[2]
-        # + n0[3] / model.tau
-        # + sum(n0[i] * g0[i] / (pyo.exp(g0[i] * model.tau) - 1) for i in rng),
-        # "phii_tt": -n0[3] / model.tau**2
-        # - sum(
-        #     n0[i]
-        #     * g0[i] ** 2
-        #     * pyo.exp(-g0[i] * model.tau)
-        #     / (1 - pyo.exp(-g0[i] * model.tau)) ** 2
-        #     for i in rng
-        # ),
-        # "phii_dt": 0,
+        "phii": sum(a[i] * model.tau ** g[i] for i in rng),
+        "phii_d": 0,
+        "phii_dd": 0,
+        "phii_t": sum(a[i] * g[i] * model.tau ** (g[i]-1) for i in rng),
+        "phii_tt": sum(a[i] * (g[i] - 1) * g[i] * model.tau ** (g[i]-2) for i in rng),
+        "phii_dt": 0,
     }
