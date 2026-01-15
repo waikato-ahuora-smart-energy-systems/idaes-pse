@@ -96,7 +96,7 @@ def phi_ideal_expressions_planck_einstein2(model, parameters):
     c = parameters["c"]
     g = parameters["g"]
     return {
-        "phii": a * pyo.log(c+pyo.exp(g * model.tau)),
+        "phii": a * pyo.log(c + pyo.exp(g * model.tau)),
         "phii_d": 0,
         "phii_dd":0,
         "phii_t": a * g * pyo.exp(g * model.tau) / (c * pyo.exp(g * model.tau)),
@@ -144,5 +144,72 @@ def phi_ideal_expressions_power(model, parameters):
         "phii_dd": 0,
         "phii_t": sum(a[i] * g[i] * model.tau ** (g[i]-1) for i in rng),
         "phii_tt": sum(a[i] * (g[i] - 1) * g[i] * model.tau ** (g[i]-2) for i in rng),
+        "phii_dt": 0,
+    }
+def phi_ideal_expressions_enth_entr_offset(model, parameters):
+    """Type01 expression for the  part of dimensionless ideal Helmholtz free energy
+
+    Args:
+        model (Block): Pyomo model
+        parameters (dict): Main parameters dictionary
+
+    Returns:
+        dict: Expressions for  part of ideal Helmholtz free energy
+    """
+    a = parameters["a"]
+    return {
+        "phii": a[0] + a[1] * model.tau,
+        "phii_d": 0,
+        "phii_dd": 0,
+        "phii_t": a[1],
+        "phii_tt": 0,
+        "phii_dt": 0,
+    }
+
+def phi_ideal_expressions_GERG_Sinh(model, parameters):
+    """Type01 expression for the  part of dimensionless ideal Helmholtz free energy
+
+    Args:
+        model (Block): Pyomo model
+        parameters (dict): Main parameters dictionary
+
+    Returns:
+        dict: Expressions for  part of ideal Helmholtz free energy
+    """
+    a = parameters["a"]
+    g = parameters["g"]
+    Tci_over_Tr = model.Tc/ model.T_star
+    rng = range(0, len(a))
+
+    return {
+        "phii": sum(a[i] * pyo.log(abs(pyo.sinh(g[i] * Tci_over_Tr * model.tau))) for i in rng),
+        "phii_d": 0,
+        "phii_dd": 0,
+        "phii_t": sum(a[i] * g[i] * Tci_over_Tr / pyo.tanh(g[i] * Tci_over_Tr * model.tau) for i in rng),
+        "phii_tt": sum(-a[i] * (g[i] * Tci_over_Tr) ** 2 / (pyo.sinh(g[i] * Tci_over_Tr * model.tau) ** 2 ) for i in rng),
+        "phii_dt": 0,
+    }
+
+def phi_ideal_expressions_GERG_Cosh(model, parameters):
+    """Type01 expression for the  part of dimensionless ideal Helmholtz free energy
+
+    Args:
+        model (Block): Pyomo model
+        parameters (dict): Main parameters dictionary
+
+    Returns:
+        dict: Expressions for  part of ideal Helmholtz free energy
+    """
+    a = parameters["a"]
+    g = parameters["g"]
+    Tci_over_Tr = model.Tc/ model.T_star
+    rng = range(0, len(a))
+
+    return {
+        "phii": sum(-a[i] * pyo.log(abs(pyo.cosh(g[i] * Tci_over_Tr * model.tau))) for i in rng),
+        "phii_d": 0,
+        "phii_dd": 0,
+        "phii_t": sum(-a[i] * g[i] * Tci_over_Tr * pyo.tanh(g[i] * Tci_over_Tr * model.tau) for i in rng),
+        "phii_tt": sum(-a[i] * (g[i] * Tci_over_Tr) ** 2 / (pyo.cosh(g[i] * Tci_over_Tr * model.tau) ** 2 ) for i in rng),
         "phii_dt": 0,
     }
