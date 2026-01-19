@@ -84,47 +84,50 @@ def phi_residual_expressions_gaussian(model, parameters):
             n[i]
             * model.delta ** (d[i]-1)
             * model.tau ** t[i]
-            * (d[i] - 2 * a[i] * model.tau * (model.tau - g[i]))
+            * (d[i] - 2 * a[i] * model.delta * (model.delta - e[i]))
             * pyo.exp(
-                -a[i] * (model.delta - e[i]) ** 2 - b[i] * (model.tau - g[i]) ** 2
+                -a[i] * (model.delta - e[i]) ** 2 - b[i] * (g[i] - model.tau) ** 2
             )
             for i in rng
         ),
-        "phir_dd": sum( ## from here
+        "phir_dd": sum(
             n[i]
+            * model.delta ** (d[i]-2)
             * model.tau ** t[i]
-            * (d[i] - 4 * a[i] * model.tau * (model.tau - g[i]) - 1)
-            + 2 * a[i] * model.tau ** 2 
+            * ((d[i] * (- 4 * a[i] * model.delta * (model.delta - e[i]) - 1))
+            + 2 * a[i] * model.delta ** 2 
+            * (2 * a[i] * (model.delta - e[i]) ** 2 -1) + d[i] ** 2)
             * pyo.exp(
-                -a[i] * (model.delta - e[i]) ** 2 - b[i] * (model.tau - g[i]) ** 2
+                - a[i] * (model.delta - e[i]) ** 2 - b[i] * (model.tau - g[i]) ** 2
             )
             for i in rng
         ),
         "phir_t": sum(
             n[i]
             * model.delta ** d[i]
-            * model.tau ** t[i]
+            * model.tau ** (t[i] -1)
+            * (t[i] - 2 * b[i] * model.tau * (model.tau - g[i]))
             * pyo.exp(
                 -a[i] * (model.delta - e[i]) ** 2 - b[i] * (model.tau - g[i]) ** 2
             )
-            * (t[i] / model.tau - 2 * b[i] * (model.tau - g[i]))
             for i in rng
         ),
         "phir_tt": sum(
             n[i]
             * model.delta ** d[i]
-            * model.tau ** t[i]
+            * model.tau ** (t[i] -2)
+            * ((t[i] ** 2 + t[i]
+                * (4 * g[i] * b[i] * model.tau - 4 * b[i] * model.tau ** 2 - 1)
+                + 2 * b[i] * model.tau ** 2
+                * (2 * g[i] ** 2 * b[i] - 4 * g[i] * b[i] * model.tau + 2 * b[i] * model.tau ** 2 - 1)
+            ))
             * pyo.exp(
                 -a[i] * (model.delta - e[i]) ** 2 - b[i] * (model.tau - g[i]) ** 2
             )
-            * (
-                (t[i] / model.tau - 2 * b[i] * (model.tau - g[i])) ** 2
-                - t[i] / model.tau**2
-                - 2 * b[i]
-            )
+            
             for i in rng
         ),
-        "phir_dt": sum(
+        "phir_dt": sum( ##here
             n[i]
             * model.delta ** d[i]
             * model.tau ** t[i]
