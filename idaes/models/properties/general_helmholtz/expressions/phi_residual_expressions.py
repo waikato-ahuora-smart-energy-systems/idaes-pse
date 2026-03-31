@@ -10,8 +10,7 @@
 # All rights reserved.  Please see the files COPYRIGHT.md and LICENSE.md
 # for full copyright and license information.
 #################################################################################
-"""Predefined residual expressions for Helmholtz EoS functions
-"""
+"""Predefined residual expressions for Helmholtz EoS functions"""
 
 __author__ = "Stephen Burroughs"
 
@@ -19,7 +18,7 @@ import pyomo.environ as pyo
 
 
 def phi_residual_expressions_power(model, parameters):
-    """ expression for the residual part of dimensionless Helmholtz free energy
+    """expression for the residual part of dimensionless Helmholtz free energy
 
     Args:
         model (Block): Pyomo model
@@ -36,12 +35,16 @@ def phi_residual_expressions_power(model, parameters):
 
     return {
         "phir": sum(n[i] * model.delta ** d[i] * model.tau ** t[i] for i in rng),
-        "phir_d": sum(n[i] * d[i] * model.delta ** (d[i] - 1) * model.tau ** t[i] for i in rng),
+        "phir_d": sum(
+            n[i] * d[i] * model.delta ** (d[i] - 1) * model.tau ** t[i] for i in rng
+        ),
         "phir_dd": sum(
             n[i] * d[i] * (d[i] - 1) * model.delta ** (d[i] - 2) * model.tau ** t[i]
             for i in rng
         ),
-        "phir_t": sum(n[i] * t[i] * model.delta ** d[i] * model.tau ** (t[i] - 1) for i in rng),
+        "phir_t": sum(
+            n[i] * t[i] * model.delta ** d[i] * model.tau ** (t[i] - 1) for i in rng
+        ),
         "phir_tt": sum(
             n[i] * t[i] * (t[i] - 1) * model.delta ** d[i] * model.tau ** (t[i] - 2)
             for i in rng
@@ -52,8 +55,9 @@ def phi_residual_expressions_power(model, parameters):
         ),
     }
 
+
 def phi_residual_expressions_gaussian(model, parameters):
-    """ expression for the residual part of dimensionless Helmholtz free energy
+    """expression for the residual part of dimensionless Helmholtz free energy
 
     Args:
         model (Block): Pyomo model
@@ -82,7 +86,7 @@ def phi_residual_expressions_gaussian(model, parameters):
         ),
         "phir_d": sum(
             n[i]
-            * model.delta ** (d[i]-1)
+            * model.delta ** (d[i] - 1)
             * model.tau ** t[i]
             * (d[i] - 2 * a[i] * model.delta * (model.delta - e[i]))
             * pyo.exp(
@@ -92,20 +96,22 @@ def phi_residual_expressions_gaussian(model, parameters):
         ),
         "phir_dd": sum(
             n[i]
-            * model.delta ** (d[i]-2)
+            * model.delta ** (d[i] - 2)
             * model.tau ** t[i]
-            * ((d[i] * (- 4 * a[i] * model.delta * (model.delta - e[i]) - 1))
-            + 2 * a[i] * model.delta ** 2 
-            * (2 * a[i] * (model.delta - e[i]) ** 2 -1) + d[i] ** 2)
+            * (
+                (d[i] * (-4 * a[i] * model.delta * (model.delta - e[i]) - 1))
+                + 2 * a[i] * model.delta**2 * (2 * a[i] * (model.delta - e[i]) ** 2 - 1)
+                + d[i] ** 2
+            )
             * pyo.exp(
-                - a[i] * (model.delta - e[i]) ** 2 - b[i] * (model.tau - g[i]) ** 2
+                -a[i] * (model.delta - e[i]) ** 2 - b[i] * (model.tau - g[i]) ** 2
             )
             for i in rng
         ),
         "phir_t": sum(
             n[i]
             * model.delta ** d[i]
-            * model.tau ** (t[i] -1)
+            * model.tau ** (t[i] - 1)
             * (t[i] - 2 * b[i] * model.tau * (model.tau - g[i]))
             * pyo.exp(
                 -a[i] * (model.delta - e[i]) ** 2 - b[i] * (model.tau - g[i]) ** 2
@@ -115,33 +121,50 @@ def phi_residual_expressions_gaussian(model, parameters):
         "phir_tt": sum(
             n[i]
             * model.delta ** d[i]
-            * model.tau ** (t[i] -2)
-            * ((t[i] ** 2 + t[i]
-                * (4 * g[i] * b[i] * model.tau - 4 * b[i] * model.tau ** 2 - 1)
-                + 2 * b[i] * model.tau ** 2
-                * (2 * g[i] ** 2 * b[i] - 4 * g[i] * b[i] * model.tau + 2 * b[i] * model.tau ** 2 - 1)
-            ))
+            * model.tau ** (t[i] - 2)
+            * (
+                (
+                    t[i] ** 2
+                    + t[i] * (4 * g[i] * b[i] * model.tau - 4 * b[i] * model.tau**2 - 1)
+                    + 2
+                    * b[i]
+                    * model.tau**2
+                    * (
+                        2 * g[i] ** 2 * b[i]
+                        - 4 * g[i] * b[i] * model.tau
+                        + 2 * b[i] * model.tau**2
+                        - 1
+                    )
+                )
+            )
             * pyo.exp(
                 -a[i] * (model.delta - e[i]) ** 2 - b[i] * (model.tau - g[i]) ** 2
             )
-            
             for i in rng
         ),
-        "phir_dt": sum( ##here
+        "phir_dt": sum(
             n[i]
-            * model.delta ** d[i]
-            * model.tau ** t[i]
-            * pyo.exp(
-                -a[i] * (model.delta - e[i]) ** 2 - b[i] * (model.tau - g[i]) ** 2
+            * model.delta ** (d[i] - 1)
+            * model.tau ** (t[i] - 1)
+            * (
+                d[i]
+                - 2
+                * a[i] ** 2
+                * model.delta
+                * (model.delta - e[i])
+                * (t[i] - 2 * b[i] ** 2 * model.tau * (model.tau - g[i]))
             )
-            * (d[i] / model.delta - 2.0 * a[i] * (model.delta - e[i]))
-            * (t[i] / model.tau - 2.0 * b[i] * (model.tau - g[i]))
+            * pyo.exp(
+                -a[i] ** 2 * (model.delta - e[i]) ** 2
+                - b[i] ** 2 * (model.tau - g[i]) ** 2
+            )
             for i in rng
         ),
     }
 
-def phi_residual_expressions_gaussian_GERG2008(model, parameters):
-    """ expression for the residual part of dimensionless Helmholtz free energy
+
+def phi_residual_expressions_gaussian_GERG2008(model, parameters):  ## to be done
+    """expression for the residual part of dimensionless Helmholtz free energy
 
     Args:
         model (Block): Pyomo model
@@ -163,9 +186,7 @@ def phi_residual_expressions_gaussian_GERG2008(model, parameters):
             n[i]
             * model.delta ** d[i]
             * model.tau ** t[i]
-            * pyo.exp(
-                -a[i] * (model.delta - e[i]) ** 2 - b[i] * (model.tau - g[i])
-            )
+            * pyo.exp(-a[i] * (model.delta - e[i]) ** 2 - b[i] * (model.tau - g[i]))
             for i in rng
         ),
         "phir_d": sum(
@@ -229,8 +250,9 @@ def phi_residual_expressions_gaussian_GERG2008(model, parameters):
         ),
     }
 
+
 def phi_residual_expressions_gaob(model, parameters):
-    """ expression for the residual part of dimensionless Helmholtz free energy
+    """expression for the residual part of dimensionless Helmholtz free energy
 
     Args:
         model (Block): Pyomo model
@@ -243,27 +265,124 @@ def phi_residual_expressions_gaob(model, parameters):
     n = parameters["eos"]["n"]
     t = parameters["eos"]["t"]
     d = parameters["eos"]["d"]
-    c = parameters["eos"]["c"]
     a = parameters["eos"]["a"]
     b = parameters["eos"]["b"]
+    bi = parameters["eos"]["bi"]
     e = parameters["eos"]["e"]
     g = parameters["eos"]["g"]
-    first_term = 1
-    rng = []
-    for last_term in last_terms:
-        rng.append(range(first_term, last_term + 1))
-        first_term = last_term + 1
+    rng = range(0, len(n))
     return {
-        # "phir": ,
-        # "phir_d": ,
-        # "phir_dd": ,
-        # "phir_t": ,
-        # "phir_tt": ,
-        # "phir_dt": ,
+        "phir": sum(
+            n[i]
+            * model.delta ** d[i]
+            * model.tau ** t[i]
+            * pyo.exp(
+                -a[i] * (model.delta - e[i]) ** 2
+                + 1 / (b[i] * (model.tau - g[i]) ** 2 + bi[i])
+            )
+            for i in rng
+        ),
+        "phir_d": sum(
+            n[i]
+            * model.delta ** (d[i] - 1)
+            * model.tau ** t[i]
+            * (d[i] - 2 * a[i] * model.delta * (model.delta - e[i]))
+            * pyo.exp(
+                1 / (bi[i] + b[i] * (model.tau - g[i]) ** 2)
+                - a[i] * (model.delta - e[i]) ** 2
+            )
+            for i in rng
+        ),
+        "phir_dd": sum(
+            n[i]
+            * model.delta ** (d[i] - 2)
+            * model.tau ** t[i]
+            * (
+                d[i] * (-4 * a[i] * model.delta * (model.delta - e[i]) - 1)
+                + 2 * a[i] * model.delta**2 * (2 * a[i] * (model.delta - e[i]) ** 2 - 1)
+                + d[i] ** 2
+            )
+            * pyo.exp(
+                1 / (bi[i] + b[i] * (model.tau - g[i]) ** 2)
+                - a[i] * (model.delta - e[i]) ** 2
+            )
+            for i in rng
+        ),
+        "phir_t": sum(
+            n[i]
+            * model.delta ** d[i]
+            * model.tau ** t[i]
+            * (
+                t[i] / model.tau
+                - 2
+                * b[i]
+                * (model.tau - g[i])
+                / (bi[i] + b[i] * (g[i] - model.tau) ** 2) ** 2
+            )
+            * pyo.exp(
+                1 / (bi[i] + b[i] * (model.tau - g[i]) ** 2)
+                - a[i] * (model.delta - e[i]) ** 2
+            )
+            for i in rng
+        ),
+        "phir_tt": sum(
+            n[i]
+            * model.delta ** d[i]
+            * model.tau ** t[i]
+            * (
+                8
+                * b[i]
+                * (model.tau - g[i]) ** 2
+                / (bi[i] + b[i] * (model.tau - g[i]) ** 2) ** 3
+                + 4
+                * b[i] ** 2
+                * (model.tau - g[i]) ** 2
+                / (bi[i] + b[i] * (model.tau - g[i]) ** 2) ** 4
+                - 4
+                * b[i]
+                * t[i]
+                * (model.tau - g[i])
+                / (model.tau * (bi[i] + b[i] * (g[i] - model.tau) ** 2) ** 2)
+                - 2 * b[i] / (bi[i] + b[i] * (model.tau - g[i]) ** 2) ** 2
+                + (t[i] - 1) * t[i] / model.tau**2
+            )
+            * pyo.exp(
+                1 / (b[i] + bi[i] * (model.tau - g[i]) ** 2)
+                - a[i] * (model.delta - e[i]) ** 2
+            )
+            for i in rng
+        ),
+        "phir_dt": sum(
+            n[i]
+            * model.delta ** (d[i] - 1)
+            * model.tau ** (t[i] - 1)
+            * 1
+            / (bi[i] + b[i] * (model.tau - g[i]) ** 2) ** 2
+            * (d[i] - 2 * a[i] * model.delta * (model.delta - e[i]))
+            * (
+                bi[i] ** 2 * t[i]
+                + 2 * b[i] * bi[i] * t[i] * (model.tau - g[i]) ** 2
+                - b[i]
+                * (model.tau - g[i])
+                * (
+                    g[i] ** 3 * b[i] * t[i]
+                    - 3 * g[i] ** 2 * b[i] * t[i] * model.tau
+                    + 3 * g[i] * b[i] * t[i] * model.tau**2
+                    - b[i] * t[i] * model.tau**2
+                    + 2 * model.tau
+                )
+            )
+            * pyo.exp(
+                1 / (bi[i] + b[i] * (model.tau - g[i]) ** 2)
+                - a[i] * (model.delta - e[i]) ** 2
+            )
+            for i in rng[3]
+        ),
     }
+
 
 def phi_residual_expressions_non_analytic(model, parameters):
-    """ expression for the residual part of dimensionless Helmholtz free energy
+    """expression for the residual part of dimensionless Helmholtz free energy
 
     Args:
         model (Block): Pyomo model
@@ -294,9 +413,10 @@ def phi_residual_expressions_non_analytic(model, parameters):
         # "phir_tt": ,
         # "phir_dt": ,
     }
+
 
 def phi_residual_expressions_lemmon2005(model, parameters):
-    """ expression for the residual part of dimensionless Helmholtz free energy
+    """expression for the residual part of dimensionless Helmholtz free energy
 
     Args:
         model (Block): Pyomo model
@@ -328,8 +448,9 @@ def phi_residual_expressions_lemmon2005(model, parameters):
         # "phir_dt": ,
     }
 
+
 def phi_residual_expressions_exponential_delta_tau(model, parameters):
-    """ expression for the residual part of dimensionless Helmholtz free energy
+    """expression for the residual part of dimensionless Helmholtz free energy
 
     Args:
         model (Block): Pyomo model
@@ -417,8 +538,9 @@ def phi_residual_expressions_exponential_delta_tau(model, parameters):
         ),
     }
 
+
 def phi_residual_expressions_exponential_reduced_density(model, parameters):
-    """ expression for the residual part of dimensionless Helmholtz free energy
+    """expression for the residual part of dimensionless Helmholtz free energy
 
     Args:
         model (Block): Pyomo model
@@ -426,7 +548,7 @@ def phi_residual_expressions_exponential_reduced_density(model, parameters):
 
     Returns:
         dict: Expressions for  part of residual Helmholtz free energy
-    """   
+    """
     n = parameters["n"]
     t = parameters["t"]
     d = parameters["d"]
@@ -439,7 +561,7 @@ def phi_residual_expressions_exponential_reduced_density(model, parameters):
             * model.tau ** t[i]
             * pyo.exp(-model.delta ** c[i])
             for i in rng
-        ), ##Check gamma value
+        ),  ##Check gamma value
         "phir_d": sum(
             n[i]
             * pyo.exp(-model.delta ** c[i])
@@ -488,8 +610,11 @@ def phi_residual_expressions_exponential_reduced_density(model, parameters):
         ),
     }
 
-def phi_residual_expressions_exponential_reduced_density_reciprocal_reduced_temperature(model, parameters):
-    """ expression for the residual part of dimensionless Helmholtz free energy
+
+def phi_residual_expressions_exponential_reduced_density_reciprocal_reduced_temperature(
+    model, parameters
+):
+    """expression for the residual part of dimensionless Helmholtz free energy
 
     Args:
         model (Block): Pyomo model
@@ -520,9 +645,10 @@ def phi_residual_expressions_exponential_reduced_density_reciprocal_reduced_temp
         # "phir_tt": ,
         # "phir_dt": ,
     }
+
 
 def phi_residual_expressions_associating(model, parameters):
-    """ expression for the residual part of dimensionless Helmholtz free energy
+    """expression for the residual part of dimensionless Helmholtz free energy
 
     Args:
         model (Block): Pyomo model
@@ -553,5 +679,3 @@ def phi_residual_expressions_associating(model, parameters):
         # "phir_tt": ,
         # "phir_dt": ,
     }
-
-   
