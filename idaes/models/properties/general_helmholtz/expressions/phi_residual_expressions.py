@@ -132,41 +132,6 @@ def phi_residual_expressions_gaob(model, parameters):
     }
 
 
-def phi_residual_expressions_non_analytic(model, parameters):
-    """expression for the non-analytic term of the residual part of dimensionless Helmholtz free energy
-    reference: Span, R., & Wagner, W. (1996). A new equation of state for carbon dioxide covering the fluid region from the triple‐point temperature to 1100 K at pressures up to 800 MPa. Journal of physical and chemical reference data, 25(6), 1509-1596.
-    Args:
-        model (Block): Pyomo model
-        parameters (dict): Main parameters dictionary
-
-    Returns:
-        dict: Expressions for  part of residual Helmholtz free energy
-    """
-    n = parameters["eos"]["n"]
-    a = parameters["eos"]["a"]
-    b = parameters["eos"]["b"]
-    ai = parameters["eos"]["A"]
-    bi = parameters["eos"]["B"]
-    ci = parameters["eos"]["C"]
-    di = parameters["eos"]["D"]
-    beta = parameters["eos"]["beta"]
-    rng = range(0, len(n))
-    return {
-        "phir": sum(
-            n[i]
-            * (
-                (1 - model.tau)
-                + ai[i]((model.delta - 1) ** 2) ** (1 / (2 * beta[i]))
-                + (bi[i] * (model.delta - 1) ** 2) ** a[i]
-            )
-            ** b[i]
-            * model.delta
-            * pyo.exp(-ci[i] * (model.delta - 1) ** 2 - di[i] * (model.tau - 1) ** 2)
-            for i in rng
-        ),
-    }
-
-
 def phi_residual_expressions_exponential_delta_tau(model, parameters):
     """expression for exponentials in the delta and tau family for the residual part of dimensionless Helmholtz free energy
     Reference: Lemmon, E. W., & Jacobsen, R. T. (2005). A new functional form and new fitting techniques for equations of state with application to pentafluoroethane (HFC-125). Journal of physical and chemical reference data, 34(1), 69-108.
@@ -259,4 +224,39 @@ def phi_residual_expressions_exponential_reduced_density(model, parameters):
             * pyo.exp(-g[i] * model.delta ** c[i])
             for i in rng
         ),  ##Check gamma value
+    }
+
+
+def phi_residual_expressions_non_analytic(model, parameters):
+    """expression for the non-analytic term of the residual part of dimensionless Helmholtz free energy
+    reference: Span, R., & Wagner, W. (1996). A new equation of state for carbon dioxide covering the fluid region from the triple‐point temperature to 1100 K at pressures up to 800 MPa. Journal of physical and chemical reference data, 25(6), 1509-1596.
+    Args:
+        model (Block): Pyomo model
+        parameters (dict): Main parameters dictionary
+
+    Returns:
+        dict: Expressions for  part of residual Helmholtz free energy
+    """
+    n = parameters["eos"]["n"]
+    a = parameters["eos"]["a"]
+    b = parameters["eos"]["b"]
+    ai = parameters["eos"]["A"]
+    bi = parameters["eos"]["B"]
+    ci = parameters["eos"]["C"]
+    di = parameters["eos"]["D"]
+    beta = parameters["eos"]["beta"]
+    rng = range(0, len(n))
+    return {
+        "phir": sum(
+            n[i]
+            * (
+                (1 - model.tau)
+                + ai[i]((model.delta - 1) ** 2) ** (1 / (2 * beta[i]))
+                + (bi[i] * (model.delta - 1) ** 2) ** a[i]
+            )
+            ** b[i]
+            * model.delta
+            * pyo.exp(-ci[i] * (model.delta - 1) ** 2 - di[i] * (model.tau - 1) ** 2)
+            for i in rng
+        ),
     }

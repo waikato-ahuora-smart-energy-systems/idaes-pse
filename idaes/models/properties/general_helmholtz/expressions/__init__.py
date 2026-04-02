@@ -32,15 +32,19 @@ from .phi_ideal_expressions import (
     phi_ideal_expressions_planck_einstein2,
     phi_ideal_expressions_cp_constant,
     phi_ideal_expressions_power,
-    phi_ideal_expressions_AlyLee
+    phi_ideal_expressions_enth_entr_offset,
+    phi_ideal_expressions_GERG_Cosh,
+    phi_ideal_expressions_GERG_Sinh,
 )
-from .phi_residual_expressions import(
+from .phi_residual_expressions import (
     phi_residual_expressions_exponential_reduced_density,
-    phi_residual_expressions_exponential_reduced_density_reciprocal_reduced_temperature,
     phi_residual_expressions_exponential_delta_tau,
     phi_residual_expressions_gaussian,
     phi_residual_expressions_power,
     phi_residual_expressions_non_analytic,
+    phi_residual_expressions_double_exponential,
+    phi_residual_expressions_gaob,
+    phi_residual_expressions_gaussian_GERG2008,
 )
 
 phi_residual_types = {
@@ -61,24 +65,28 @@ phi_ideal_types = {
 }
 
 phi_ideal_modular_parts = {
-    0: None, #custom
+    0: None,  # custom
     1: phi_ideal_expressions_lead,
     2: phi_ideal_expressions_logtau,
     3: phi_ideal_expressions_planck_einstein1,
     4: phi_ideal_expressions_planck_einstein2,
     5: phi_ideal_expressions_cp_constant,
     6: phi_ideal_expressions_power,
-    7: phi_ideal_expressions_AlyLee,
+    7: phi_ideal_expressions_enth_entr_offset,
+    8: phi_ideal_expressions_GERG_Cosh,
+    9: phi_ideal_expressions_GERG_Sinh,
 }
 
 phi_residual_modular_parts = {
-    0: None, #custom
+    0: None,  # custom
     1: phi_residual_expressions_power,
-    2: phi_residual_expressions_exponential_reduced_density,
-    3: phi_residual_expressions_exponential_reduced_density_reciprocal_reduced_temperature,
-    4: phi_residual_expressions_exponential_delta_tau,
-    5: phi_residual_expressions_gaussian,
-    6: phi_residual_expressions_non_analytic,
+    2: phi_residual_expressions_gaussian,
+    3: phi_residual_expressions_gaussian_GERG2008,
+    4: phi_residual_expressions_gaob,
+    5: phi_residual_expressions_exponential_delta_tau,
+    6: phi_residual_expressions_double_exponential,
+    7: phi_residual_expressions_exponential_reduced_density,
+    8: phi_residual_expressions_non_analytic,
 }
 
 delta_sat_types = {
