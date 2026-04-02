@@ -152,30 +152,84 @@ class WriteParameters(object):
 
         # Check if a predefined form of the ideal part of Helmholtz free energy is used
         try:
-            phi_ideal = {"phii": 0, "phii_d": 0, "phii_dd": 0, "phii_t": 0, "phii_tt": 0, "phii_dt": 0}
+            phi_ideal = {
+                "phii": 0,
+                "phii_d": 0,
+                "phii_dd": 0,
+                "phii_t": 0,
+                "phii_tt": 0,
+                "phii_dt": 0,
+            }
             phi_ideal_terms = parameters["eos"]["ideal_terms"]
             if phi_ideal_terms:
                 for ideal_term in phi_ideal_terms:
                     phi_expressions = phi_ideal_modular_parts[ideal_term["ideal_type"]](
                         model=self.model, parameters=ideal_term
                     )
-                    for key in phi_ideal.keys():
-                        phi_ideal[key] = phi_ideal[key] + phi_expressions[key]
+                    phii = phi_expressions["phii"]
+                    phii_d = pyo.differentiate(
+                        phii, self.model.delta, mode="reverse_symbolic"
+                    )
+                    phii_dd = pyo.differentiate(
+                        phii_d, self.model.delta, mode="reverse_symbolic"
+                    )
+                    phii_t = pyo.differentiate(
+                        phii, self.model.tau, mode="reverse_symbolic"
+                    )
+                    phii_tt = pyo.differentiate(
+                        phii_t, self.model.tau, mode="reverse_symbolic"
+                    )
+                    phii_dt = pyo.differentiate(
+                        phii_d, self.model.tau, mode="reverse_symbolic"
+                    )
+                    phi_ideal["phii"] = phi_ideal["phii"] + phii
+                    phi_ideal["phii_d"] = phi_ideal["phii_d"] + phii_d
+                    phi_ideal["phii_dd"] = phi_ideal["phii_dd"] + phii_dd
+                    phi_ideal["phii_t"] = phi_ideal["phii_t"] + phii_t
+                    phi_ideal["phii_tt"] = phi_ideal["phii_tt"] + phii_tt
+                    phi_ideal["phii_dt"] = phi_ideal["phii_dt"] + phii_dt
                 self.add(phi_ideal)
         except KeyError:
             phi_ideal_type = 0
 
         # Check if a predefined form of the residual part of Helmholtz free energy is used
         try:
-            phi_residual = {"phir": 0, "phir_d": 0, "phir_dd": 0, "phir_t": 0, "phir_tt": 0, "phir_dt": 0}
+            phi_residual = {
+                "phir": 0,
+                "phir_d": 0,
+                "phir_dd": 0,
+                "phir_t": 0,
+                "phir_tt": 0,
+                "phir_dt": 0,
+            }
             phi_residual_terms = parameters["eos"]["residual_terms"]
             if phi_residual_terms:
                 for residual_term in phi_residual_terms:
-                    phi_expressions = phi_residual_modular_parts[residual_term["residual_type"]](
-                        model=self.model, parameters=residual_term
+                    phi_expressions = phi_residual_modular_parts[
+                        residual_term["residual_type"]
+                    ](model=self.model, parameters=residual_term)
+                    phir = phi_expressions["phir"]
+                    phir_d = pyo.differentiate(
+                        phir, self.model.delta, mode="reverse_symbolic"
                     )
-                    for key in phi_residual.keys():
-                        phi_residual[key] = phi_residual[key] + phi_expressions[key]
+                    phir_dd = pyo.differentiate(
+                        phir_d, self.model.delta, mode="reverse_symbolic"
+                    )
+                    phir_t = pyo.differentiate(
+                        phir, self.model.tau, mode="reverse_symbolic"
+                    )
+                    phir_tt = pyo.differentiate(
+                        phir_t, self.model.tau, mode="reverse_symbolic"
+                    )
+                    phir_dt = pyo.differentiate(
+                        phir_d, self.model.tau, mode="reverse_symbolic"
+                    )
+                    phi_residual["phir"] = phi_residual["phir"] + phir
+                    phi_residual["phir_d"] = phi_residual["phir_d"] + phir_d
+                    phi_residual["phir_dd"] = phi_residual["phir_dd"] + phir_dd
+                    phi_residual["phir_t"] = phi_residual["phir_t"] + phir_t
+                    phi_residual["phir_tt"] = phi_residual["phir_tt"] + phir_tt
+                    phi_residual["phir_dt"] = phi_residual["phir_dt"] + phir_dt
                 self.add(phi_residual)
         except KeyError:
             phi_residual_type = 0
