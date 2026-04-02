@@ -290,7 +290,7 @@ class WriteParameters(object):
         Returns:
             float: pressure in kPa
         """
-        self.model.delta = rho / self.rho_star
+        self.model.delta = rho / self.rho_star + 1e-08
         self.model.tau = self.T_star / T
         return pyo.value(rho * self.R * T * (1 + self.model.delta * self.model.phir_d))
 
