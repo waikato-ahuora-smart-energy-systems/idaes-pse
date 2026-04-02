@@ -55,6 +55,12 @@ documentation::
                 "    Pressures up to 800 MPa. Journal of Physical and Chemical Reference Data,",
                 "    25, 1509."
             ],
+            "ideal_terms": [
+                ...
+            ],
+            "residual_terms": [
+                ...
+            ],
             ...
         },
         "aux": {
@@ -208,11 +214,23 @@ The following example shows how to set the reference state in the main parameter
 Predefined Expressions
 ----------------------
 
-Commonly used expressions are predefined and can be used by specifying expression types 
+Common terms are predefined and can be used to build expressions by specifying types
 in the main parameter file.
 
 Ideal Part of Dimensionless Helmholtz Free Energy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Predefined terms for the dimensionless Helmholtz free energy are outlined below. This 
+
+**Type 1**
+
+**Type 2**
+**Type 3**
+**Type 4**
+**Type 5**
+**Type 6**
+**Type 7**
+**Type 8**
+**Type 9**
 
 **Type 1**
 
