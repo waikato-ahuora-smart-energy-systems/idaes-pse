@@ -109,14 +109,14 @@ def phi_residual_expressions_gaob(model, parameters):
     Returns:
         dict: Expression for part of residual Helmholtz free energy
     """
-    n = parameters["eos"]["n"]
-    t = parameters["eos"]["t"]
-    d = parameters["eos"]["d"]
-    a = parameters["eos"]["a"]
-    b = parameters["eos"]["b"]
-    bi = parameters["eos"]["bi"]
-    e = parameters["eos"]["e"]
-    g = parameters["eos"]["g"]
+    n = parameters["n"]
+    t = parameters["t"]
+    d = parameters["d"]
+    a = parameters["a"]
+    b = parameters["b"]
+    bi = parameters["bi"]
+    e = parameters["e"]
+    g = parameters["g"]
     rng = range(0, len(n))
     return {
         "phir": sum(
@@ -144,10 +144,10 @@ def phi_residual_expressions_exponential_delta_tau(model, parameters):
     Returns:
         dict: Expressions for  part of residual Helmholtz free energy
     """
-    n = parameters["eos"]["n"]
-    t = parameters["eos"]["t"]
-    d = parameters["eos"]["d"]
-    c = parameters["eos"]["c"]
+    n = parameters["n"]
+    t = parameters["t"]
+    d = parameters["d"]
+    c = parameters["c"]
     rng = range(0, len(n))
 
     return {
@@ -179,13 +179,13 @@ def phi_residual_expressions_double_exponential(model, parameters):
     Returns:
         dict: Expressions for  part of residual Helmholtz free energy
     """
-    n = parameters["eos"]["n"]
-    t = parameters["eos"]["t"]
-    d = parameters["eos"]["d"]
-    gd = parameters["eos"]["gd"]
-    gt = parameters["eos"]["gt"]
-    ld = parameters["eos"]["ld"]
-    lt = parameters["eos"]["lt"]
+    n = parameters["n"]
+    t = parameters["t"]
+    d = parameters["d"]
+    gd = parameters["gd"]
+    gt = parameters["gt"]
+    ld = parameters["ld"]
+    lt = parameters["lt"]
 
     rng = range(0, len(n))
 
@@ -237,21 +237,21 @@ def phi_residual_expressions_non_analytic(model, parameters):
     Returns:
         dict: Expressions for  part of residual Helmholtz free energy
     """
-    n = parameters["eos"]["n"]
-    a = parameters["eos"]["a"]
-    b = parameters["eos"]["b"]
-    ai = parameters["eos"]["A"]
-    bi = parameters["eos"]["B"]
-    ci = parameters["eos"]["C"]
-    di = parameters["eos"]["D"]
-    beta = parameters["eos"]["beta"]
+    n = parameters["n"]
+    a = parameters["a"]
+    b = parameters["b"]
+    ai = parameters["A"]
+    bi = parameters["B"]
+    ci = parameters["C"]
+    di = parameters["D"]
+    beta = parameters["beta"]
     rng = range(0, len(n))
     return {
         "phir": sum(
             n[i]
             * (
                 (1 - model.tau)
-                + ai[i]((model.delta - 1) ** 2) ** (1 / (2 * beta[i]))
+                + ai[i] * ((model.delta - 1) ** 2) ** (1 / (2 * beta[i]))
                 + (bi[i] * (model.delta - 1) ** 2) ** a[i]
             )
             ** b[i]
