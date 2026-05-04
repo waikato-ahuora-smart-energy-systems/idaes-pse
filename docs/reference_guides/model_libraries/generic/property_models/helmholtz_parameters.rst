@@ -214,39 +214,76 @@ The following example shows how to set the reference state in the main parameter
 Predefined Expressions
 ----------------------
 
-Common terms are predefined and can be used to build expressions by specifying types
-in the main parameter file.
+Common terms are predefined and can be combined to build expressions in a modular fashion by specifying types
+in the main parameter file. The predefined expression types for the ideal and residual contributions of the dimensionless Helmholtz free energy are listed below, alongside an example of how these expressions can be combined within a parameter file.
 
 Ideal Part of Dimensionless Helmholtz Free Energy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Predefined terms for the dimensionless Helmholtz free energy are outlined below. This 
+Predefined terms for the dimensionless Helmholtz free energy are outlined below. These expressions reflect the commmon equation families used to evaluate the Ideal part of Helmholtz energy.
+In each instance, :math:`\delta` is the reduced density amd :math:`\tau` is the inverse reduced temperature, with additional parameters defined within the parameter file for the component.
 
 **Type 1**
-
-**Type 2**
-**Type 3**
-**Type 4**
-**Type 5**
-**Type 6**
-**Type 7**
-**Type 8**
-**Type 9**
-
-**Type 1**
-
-The predefined type 1 form of the ideal portion of the dimensionless Helmholtz free energy 
-is shown below. Parameters are provided in the ``"eos"`` section of the main parameter file. 
-This form of the expression requires a dictionary of the :math:`n^\circ_i$`` 
-parameters as ``n0`` and the math `\gamma^\circ$` parameters as ``g0``.  The last term
-index in the sum (:math:`h`) is provided as ``last_term_ideal``.  
+    Lead term for the ideal part of the dimensionless Helmholtz free energy:
 
 .. math::
 
-    \log_e \delta + n^\circ_1 + n^\circ_2 \tau + n^\circ_3 \log_e \tau + 
-    \sum_{i = 4}^h n^\circ_i \log_e \left[ 1 - \exp(-\gamma^\circ_i  \tau)\right]
+   \phi^0_i = \ln(\delta) + a_0 + a_1 \tau
 
-A truncated example of a main parameter file is provided below, which uses this the type 1
-form of the dimensionless Helmholtz free energy::
+
+**Type 2**
+    Log-tau expression for the ideal part of dimensionless Helmholtz free energy
+.. math::
+
+   \phi_i^0 = a \ln(\tau)
+
+
+**Type 3**
+Type01 expression for the first Planck Einstein part of dimensionless ideal Helmholtz free energy
+.. math::
+
+   \phi_i^0 = \sum_i a_i \ln\left(1 - \exp(-g_i \tau)\right)
+
+
+**Type 4**
+Second Planck Einstein expression for the ideal part of dimensionless Helmholtz free energy
+.. math::
+
+   \phi_i^0 = a \ln\left(c + \exp(g \tau)\right)
+
+
+**Type 5**
+Expression for the cp constant part of ideal dimensionless Helmholtz free energy
+.. math::
+
+   \phi_i^0 = a - a t_0 + a \ln(t_0)
+
+
+**Type 6**
+Power part of dimensionless ideal Helmholtz free energy
+.. math::
+
+   \phi_i^0 = \sum_i a_i \tau^{g_i}
+
+
+**Type 7**
+    7: phi_ideal_expressions_enth_entr_offset,
+.. math::
+
+   \phi_i^0 = a_0 + a_1 \tau
+
+**Type 8**
+    8: phi_ideal_expressions_GERG_Cosh,
+.. math::
+
+   \phi_i^0 = \sum_i a_i \ln\left|\sinh\left(g_i \frac{T_c}{T^*} \tau\right)\right|
+
+**Type 9**
+    9: phi_ideal_expressions_GERG_Sinh,
+.. math::
+
+   \phi_i^0 = \sum_i -a_i \ln\left|\cosh\left(g_i \frac{T_c}{T^*} \tau\right)\right|
+
+A truncated example of a main parameter file is provided below, with the Helmholtz ideal energy contribution made up of a combination of type 1, 2, and 3 expressions:
 
     {
         "comp": "co2",
@@ -255,58 +292,38 @@ form of the dimensionless Helmholtz free energy::
         },
         "eos": {
             ...
-            "n0": {
-                "1": 8.37304456,
-                "2": -3.70454304,
-                "3": 2.5,
-                "4": 1.99427042,
-                "5": 0.62105248,
-                "6": 0.41195293,
-                "7": 1.04028922,
-                "8": 0.08327678
-            },
-            "g0": {
-                "4": 3.15163,
-                "5": 6.11190,
-                "6": 6.77708,
-                "7": 11.32384,
-                "8": 27.08792
-            },
-            "last_term_ideal": 8,
-            "phi_ideal_type": 1,
+            "ideal_terms": [
+                {"ideal_type": 1,
+                    "a": [
+                        8.37304456,
+                        -3.70454304
+                    ]
+                },
+                {"ideal_type": 2,
+                    "a": 2.5
+                },
+                {"ideal_type": 3,
+                    "a": [
+                        1.99427042,
+                        0.62105248,
+                        0.41195293,
+                        1.04028922,
+                        0.08327678
+                    ],
+                    "g": [
+                        3.15163,
+                        6.11190,
+                        6.77708,
+                        11.32384,
+                        27.08792
+                    ]
+            }
+
+        ],
             ...
         },
         ...
     }
-
-**Type 2**
-
-Parameters for the type 2 version are similar to type 1, but the ``last_term_ideal`` parameter is 
-a list [h1, h2].
-
-.. math::
-
-    \log_e \delta + n^\circ_1 + n^\circ_2 \tau + n^\circ_3 \log_e \tau  + 
-    \sum_{i = 4}^{h_1} n^\circ_i  \tau^{\gamma^\circ_i} + 
-    \sum_{i = h_1 + 1}^{h_2} n^\circ_i \log_e \left[ 1 - \exp(-\gamma^\circ_i  \tau)\right]
-
-
-**Type 3**
-
-Parameters for the type 3 version are similar to type 1.
-
-.. math::
-
-    \log_e \delta + n^\circ_1 + n^\circ_2 \tau + n^\circ_3 \log_e \tau  + 
-    \sum_{i = 4}^{h} n^\circ_i  \tau^{\gamma^\circ_i}
-
-**Type 4**
-
-Parameters for the type 4 version are similar to type 1
-
-.. math::
-     \log_e \delta + n^\circ_1 + n^\circ_2 \tau + (n^\circ_3 - 1) \log_e \tau + 
-     \sum_{i = 4}^h n^\circ_i \log_e \left[ 1 - \exp(\frac{-\gamma^\circ_i  \tau}{T_c})\right]
 
      
 Residual Part of Dimensionless Helmholtz Free Energy

@@ -121,7 +121,7 @@ def phi_ideal_expressions_power(model, parameters):
 
 
 def phi_ideal_expressions_enth_entr_offset(model, parameters):
-    """Type01 expression for the  part of dimensionless ideal Helmholtz free energy
+    """Enthalpy/entropy offset part of dimensionless ideal Helmholtz free energy
 
     Args:
         model (Block): Pyomo model
