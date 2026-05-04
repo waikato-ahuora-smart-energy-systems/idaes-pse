@@ -18,7 +18,7 @@ import pyomo.environ as pyo
 
 
 def phi_residual_expressions_power(model, parameters):
-    """expression for the residual part of dimensionless Helmholtz free energy
+    """Power expression for the residual part of dimensionless Helmholtz free energy
 
     Args:
         model (Block): Pyomo model
@@ -39,7 +39,7 @@ def phi_residual_expressions_power(model, parameters):
 
 
 def phi_residual_expressions_gaussian(model, parameters):
-    """expression for the residual part of dimensionless Helmholtz free energy
+    """Gaussian expression for the residual part of dimensionless Helmholtz free energy
 
     Args:
         model (Block): Pyomo model
@@ -70,7 +70,7 @@ def phi_residual_expressions_gaussian(model, parameters):
 
 
 def phi_residual_expressions_gaussian_GERG2008(model, parameters):
-    """expression for the gaussian expression for the residual part of dimensionless Helmholtz free energy
+    """Gaussian expression for the residual part of dimensionless Helmholtz free energy - GERG
     Reference: Kunz, O., & Wagner, W. (2012). The GERG-2008 wide-range equation of state for natural gases and other mixtures: An expansion of GERG-2004. Journal of chemical & engineering data, 57(11), 3032-3091.
 
     Args:
@@ -100,7 +100,7 @@ def phi_residual_expressions_gaussian_GERG2008(model, parameters):
 
 
 def phi_residual_expressions_gaob(model, parameters):
-    """expression for associating term of the residual part of dimensionless Helmholtz free energy
+    """Expression for associating term of the residual part of dimensionless Helmholtz free energy
     Reference: Gao, K., Wu, J., Bell, I. H., Harvey, A. H., & Lemmon, E. W. (2023). A reference equation of state with an associating term for the thermodynamic properties of ammonia. Journal of Physical and Chemical Reference Data, 52(1).
     Args:
         model (Block): Pyomo model
@@ -133,7 +133,7 @@ def phi_residual_expressions_gaob(model, parameters):
 
 
 def phi_residual_expressions_exponential_delta_tau(model, parameters):
-    """expression for exponentials in the delta and tau family for the residual part of dimensionless Helmholtz free energy
+    """Expression for exponentials in the delta and tau family for the residual part of dimensionless Helmholtz free energy
     Reference: Lemmon, E. W., & Jacobsen, R. T. (2005). A new functional form and new fitting techniques for equations of state with application to pentafluoroethane (HFC-125). Journal of physical and chemical reference data, 34(1), 69-108.
 
 
@@ -159,16 +159,11 @@ def phi_residual_expressions_exponential_delta_tau(model, parameters):
             * pyo.exp(-model.tau ** d[i])
             for i in rng
         ),
-        # "phir_d": ,
-        # "phir_dd": ,
-        # "phir_t": ,
-        # "phir_tt": ,
-        # "phir_dt": ,
     }
 
 
 def phi_residual_expressions_double_exponential(model, parameters):
-    """expression for exponentials in the delta and tau family for the residual part of dimensionless Helmholtz free energy
+    """Expression for double exponentials in the delta and tau family for the residual part of dimensionless Helmholtz free energy
     Reference: De Reuck, K. M., & Craven, R. J. B. (1993). Methanol. International Thermodynamic Tables of the Fluid State, vol. 12. IUPAC, Blackwell Scientific Publications, London.
 
 
@@ -201,7 +196,7 @@ def phi_residual_expressions_double_exponential(model, parameters):
 
 
 def phi_residual_expressions_exponential_reduced_density(model, parameters):
-    """expression for reduced density exponentials in the residual part of dimensionless Helmholtz free energy, often just referred to as the exponential term
+    """Expression for reduced density exponentials in the residual part of dimensionless Helmholtz free energy, often just referred to as the exponential term
 
     Args:
         model (Block): Pyomo model
@@ -228,7 +223,7 @@ def phi_residual_expressions_exponential_reduced_density(model, parameters):
 
 
 def phi_residual_expressions_non_analytic(model, parameters):
-    """expression for the non-analytic term of the residual part of dimensionless Helmholtz free energy
+    """Expression for the non-analytic term of the residual part of dimensionless Helmholtz free energy
     reference: Span, R., & Wagner, W. (1996). A new equation of state for carbon dioxide covering the fluid region from the triple‐point temperature to 1100 K at pressures up to 800 MPa. Journal of physical and chemical reference data, 25(6), 1509-1596.
     Args:
         model (Block): Pyomo model
