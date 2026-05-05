@@ -59,11 +59,13 @@ def phi_ideal_expressions_planck_einstein1(model, parameters):
     Returns:
         dict: Expressions for first Planck Einstein part of ideal Helmholtz free energy
     """
-    a = parameters["a"]
-    g = parameters["g"]
-    rng = range(0, len(a))
+    n = parameters["n"]
+    t = parameters["t"]
+    Tc = parameters["basic"]["Tc"]
+
+    rng = range(0, len(n))
     return {
-        "phii": sum(a[i] * pyo.log(1 - pyo.exp(-g[i] * model.tau)) for i in rng),
+        "phii": sum(n[i] * pyo.log(1 - pyo.exp(-t[i] * model.tau/Tc)) for i in rng),
     }
 
 
@@ -80,8 +82,11 @@ def phi_ideal_expressions_planck_einstein2(model, parameters):
     a = parameters["a"]
     c = parameters["c"]
     g = parameters["g"]
+    d = parameters["d"]
+    rng = range(0, len(a))
+
     return {
-        "phii": a * pyo.log(c + pyo.exp(g * model.tau)),
+        "phii": sum(a[i] * pyo.log(c[i] + d[i]*pyo.exp(g[i] * model.tau))for i in rng),
     }
 
 
@@ -112,8 +117,8 @@ def phi_ideal_expressions_power(model, parameters):
     Returns:
         dict: Expressions for Power part of ideal Helmholtz free energy
     """
-    a = parameters["a"]
-    g = parameters["g"]
+    a = parameters["n"]
+    g = parameters["t"]
     rng = range(0, len(a))
     return {
         "phii": sum(a[i] * model.tau ** g[i] for i in rng),

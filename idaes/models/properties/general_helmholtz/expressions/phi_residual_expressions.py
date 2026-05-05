@@ -147,7 +147,8 @@ def phi_residual_expressions_exponential_delta_tau(model, parameters):
     n = parameters["n"]
     t = parameters["t"]
     d = parameters["d"]
-    c = parameters["c"]
+    l = parameters["l"]
+    m = parameters["m"]
     rng = range(0, len(n))
 
     return {
@@ -155,8 +156,8 @@ def phi_residual_expressions_exponential_delta_tau(model, parameters):
             n[i]
             * model.delta ** d[i]
             * model.tau ** t[i]
-            * pyo.exp(-model.delta ** c[i])
-            * pyo.exp(-model.tau ** d[i])
+            * pyo.exp(-model.delta ** l[i])
+            * pyo.exp(-model.tau ** m[i])
             for i in rng
         ),
     }
@@ -208,7 +209,7 @@ def phi_residual_expressions_exponential_reduced_density(model, parameters):
     n = parameters["n"]
     t = parameters["t"]
     d = parameters["d"]
-    c = parameters["c"]
+    l = parameters["l"]
     g = parameters["g"]
     rng = range(0, len(n))
     return {
@@ -216,7 +217,7 @@ def phi_residual_expressions_exponential_reduced_density(model, parameters):
             n[i]
             * model.delta ** d[i]
             * model.tau ** t[i]
-            * pyo.exp(-g[i] * model.delta ** c[i])
+            * pyo.exp(-g[i] * model.delta ** l[i])
             for i in rng
         ),  ##Check gamma value
     }
