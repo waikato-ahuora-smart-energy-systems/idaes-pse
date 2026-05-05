@@ -79,14 +79,14 @@ def phi_ideal_expressions_planck_einstein2(model, parameters):
     Returns:
         dict: Expressions for second Planck Einstein part of ideal Helmholtz free energy
     """
-    a = parameters["a"]
-    c = parameters["c"]
-    g = parameters["g"]
+    n = parameters["n"]
+    l = parameters["l"]
+    t = parameters["t"]
     d = parameters["d"]
-    rng = range(0, len(a))
+    rng = range(0, len(n))
 
     return {
-        "phii": sum(a[i] * pyo.log(c[i] + d[i]*pyo.exp(g[i] * model.tau))for i in rng),
+        "phii": sum(n[i] * pyo.log(l[i] + d[i]*pyo.exp(t[i] * model.tau))for i in rng),
     }
 
 

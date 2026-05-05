@@ -215,12 +215,16 @@ Predefined Expressions
 ----------------------
 
 Common terms are predefined and can be combined to build expressions in a modular fashion by specifying types
-in the main parameter file. The predefined expression types for the ideal and residual contributions of the dimensionless Helmholtz free energy are listed below, alongside an example of how these expressions can be combined within a parameter file.
+in the main parameter file. The predefined expression types for the ideal and residual contributions of the 
+dimensionless Helmholtz free energy are listed below, alongside an example of how these expressions can be 
+combined within a parameter file.
 
 Ideal Part of Dimensionless Helmholtz Free Energy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Predefined terms for the dimensionless Helmholtz free energy are outlined below. These expressions reflect the commmon equation families used to evaluate the Ideal part of Helmholtz energy.
-In each instance, :math:`\delta` is the reduced density amd :math:`\tau` is the inverse reduced temperature, with additional parameters defined within the parameter file for the component.
+Predefined terms for the dimensionless Helmholtz free energy are outlined below. These expressions reflect the 
+commmon equation families used to evaluate the Ideal part of Helmholtz energy.
+In each instance, :math:`\delta` is the reduced density amd :math:`\tau` is the inverse reduced temperature, 
+with additional parameters defined within the parameter file for the component.
 
 **Type 1**
     Lead term for the ideal part of the dimensionless Helmholtz free energy:
@@ -241,14 +245,14 @@ In each instance, :math:`\delta` is the reduced density amd :math:`\tau` is the 
 Type01 expression for the first Planck Einstein part of dimensionless ideal Helmholtz free energy
 .. math::
 
-   \phi_i^0 = \sum_i a_i \ln\left(1 - \exp(-g_i \tau)\right)
+   \phi_i^0 = \sum_i n_i \ln\left(1 - \exp(-t_i \tau)\right)
 
 
 **Type 4**
 Second Planck Einstein expression for the ideal part of dimensionless Helmholtz free energy
 .. math::
 
-   \phi_i^0 = a \ln\left(c + \exp(g \tau)\right)
+   \phi_i^0 = n \ln\left(l + \exp(t \tau)\right)
 
 
 **Type 5**
@@ -262,7 +266,7 @@ Expression for the cp constant part of ideal dimensionless Helmholtz free energy
 Power part of dimensionless ideal Helmholtz free energy
 .. math::
 
-   \phi_i^0 = \sum_i a_i \tau^{g_i}
+   \phi_i^0 = \sum_i n_i \tau^{t_i}
 
 
 **Type 7**
@@ -284,7 +288,8 @@ GERG-sinh of dimensionless ideal Helmholtz free energy
 
    \phi_i^0 = \sum_i -a_i \ln\left|\cosh\left(g_i \frac{T_c}{T^*} \tau\right)\right|
 
-A truncated example of a main parameter file is provided below, with the Helmholtz ideal energy contribution made up of a combination of type 1, 2, and 3 expressions:
+A truncated example of a main parameter file is provided below, with the Helmholtz ideal energy contribution,
+ made up of a combination of type 1, 2, and 3 expressions:
 
     {
         "comp": "co2",
@@ -330,7 +335,8 @@ A truncated example of a main parameter file is provided below, with the Helmhol
 Residual Part of Dimensionless Helmholtz Free Energy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Residual contribution for the dimensionless Helmholtz free energy follows the same structure as previously outlined for the Ideal contribution.
+The Residual contribution for the dimensionless Helmholtz free energy follows the same structure 
+as previously outlined for the Ideal contribution.
 Predefined terms can be combined to formulate the appropriate expression for a given compound.
 
 The example below shows how to use a predefined residual dimensionless Helmholtz 
