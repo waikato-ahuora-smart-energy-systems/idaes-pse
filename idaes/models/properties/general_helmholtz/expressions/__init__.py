@@ -44,12 +44,12 @@ phi_ideal_modular_parts = {
     2: phi_ideal_expressions_logtau,
     3: phi_ideal_expressions_planck_einstein1,
     4: phi_ideal_expressions_planck_einstein2,
-    5: phi_ideal_expressions_cp_constant,
-    6: phi_ideal_expressions_power,
-    7: phi_ideal_expressions_enth_entr_offset,
-    8: phi_ideal_expressions_GERG_Cosh,
-    9: phi_ideal_expressions_GERG_Sinh,
-    10: phi_ideal_expressions_planck_einstein3,
+    5: phi_ideal_expressions_planck_einstein3,
+    6: phi_ideal_expressions_cp_constant,
+    7: phi_ideal_expressions_power,
+    8: phi_ideal_expressions_enth_entr_offset,
+    9: phi_ideal_expressions_GERG_Cosh,
+    10: phi_ideal_expressions_GERG_Sinh,
 }
 
 phi_residual_modular_parts = {
