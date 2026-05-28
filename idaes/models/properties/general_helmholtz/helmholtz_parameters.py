@@ -24,6 +24,7 @@ from idaes.models.properties.general_helmholtz.expressions import (
     phi_residual_modular_parts,
     delta_sat_types,
     surface_tension_types,
+    tcx_types
 )
 
 _log = logging.getLogger("idaes.helmholtz_parameters")
@@ -248,6 +249,14 @@ class WriteParameters(object):
                         }
                     )
 
+        #Check if using predefined thermal conductivity expression
+        tcx_parameters = parameters["transport"]["thermal_conductivity"].get("expressions", None)
+        if tcx_parameters is not None:
+            tcx_expression = 0
+            for tcx_term in tcx_parameters:
+                tcx_cont = tcx_types[tcx_term["type"]](model = self.model, parameters=tcx_term)
+                tcx_expression = tcx_expression + tcx_cont
+            self.add({"thermal_conductivity": tcx_expression})
         # Check if using predefined surface tension expression
         try:
             etype = parameters["transport"]["surface_tension"]["type"]
@@ -335,6 +344,7 @@ class WriteParameters(object):
             ConcreteModel: Pyomo model with variables from args
         """
         m = pyo.ConcreteModel()
+        m.name = self.comp
         for a in args:
             setattr(m, a, pyo.Var())
         m.R = pyo.Param(initialize=self.R)

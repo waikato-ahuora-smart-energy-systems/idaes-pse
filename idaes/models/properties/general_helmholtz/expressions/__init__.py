@@ -38,7 +38,7 @@ from .phi_residual_expressions import (
     phi_residual_expressions_gaussian_GERG2008,
 )
 
-from tcx_expressions import (
+from .tcx_expressions import (
     lambda_0_type01, 
     lambda_r_type01, 
     lambda_c_type01,
