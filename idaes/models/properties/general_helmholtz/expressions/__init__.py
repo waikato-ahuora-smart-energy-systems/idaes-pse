@@ -38,6 +38,13 @@ from .phi_residual_expressions import (
     phi_residual_expressions_gaussian_GERG2008,
 )
 
+from tcx_expressions import (
+    lambda_0_type01, 
+    lambda_r_type01, 
+    lambda_c_type01,
+    lambda_c_type02
+)
+
 phi_ideal_modular_parts = {
     0: None,  # custom
     1: phi_ideal_expressions_lead,
@@ -69,6 +76,14 @@ delta_sat_types = {
     1: sat_delta_type01,
     2: sat_delta_type02,
     3: sat_delta_type03,
+}
+
+tcx_types = {
+    0: None,  # custom
+    1: lambda_0_type01,
+    2: lambda_r_type01,
+    3: lambda_c_type01,
+    4: lambda_c_type02,
 }
 
 surface_tension_types = {
