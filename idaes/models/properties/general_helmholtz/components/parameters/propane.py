@@ -100,6 +100,8 @@ def thermal_conductivity_rule(m):
     lambda_c = (
         1000 * MW * cp * rho * R0 * k * T / 6.0 / math.pi / mu / xi * (Omega - Omega0)
     )
+    print(l0)
+    print(lr)
     return 1000 * (l0 + lr + lambda_c)
 
 
@@ -190,10 +192,15 @@ def main(dry_run=False):
     we.add(
         {
             "viscosity": viscosity_rule,
-            "thermal_conductivity": thermal_conductivity_rule,
+            # "thermal_conductivity": thermal_conductivity_rule,
         }
     )
     we.write(dry_run=dry_run)
+    # t = 320
+    # we.model.delta = pyo.value(we.model.delta_v_sat_approx)
+    # we.model.tau = we.model.T_star/t
+    # we.model_tcx.thermal_conductivity
+
     return we
 
 

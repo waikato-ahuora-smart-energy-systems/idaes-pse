@@ -40,7 +40,9 @@ from .phi_residual_expressions import (
 
 from .tcx_expressions import (
     lambda_0_type01, 
+    lambda_0_type02,
     lambda_r_type01, 
+    lambda_r_type02,
     lambda_c_type01,
     lambda_c_type02
 )
@@ -81,9 +83,11 @@ delta_sat_types = {
 tcx_types = {
     0: None,  # custom
     1: lambda_0_type01,
-    2: lambda_r_type01,
-    3: lambda_c_type01,
-    4: lambda_c_type02,
+    2: lambda_0_type02,
+    3: lambda_r_type01,
+    4: lambda_r_type02,
+    5: lambda_c_type01,
+    6: lambda_c_type02,
 }
 
 surface_tension_types = {

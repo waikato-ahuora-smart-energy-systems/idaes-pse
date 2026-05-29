@@ -237,6 +237,7 @@
                 "    of the Thermal Conductivity of Propane from 86 to 600 K at Pressures",
                 "    to 70 MPa, J. Chem. Eng. Data, 47(4):932-940, 2002."
             ],
+            "form": "l0+lr+lc",
             "expressions":[
                 {"type": 1,
                 "a":[
@@ -244,7 +245,7 @@
                     0.00816371,
                     0.0199374]
             },
-                {"type": 2,
+                {"type": 3,
                 "b1":[
                     -0.03695,
                     0.148658,
@@ -260,11 +261,10 @@
                     0.00616079
                 ]
             },  
-                {"type": 4,
-                "t_ref": 554.73,
+                {"type": 6,
                 "qd": 7.16635e-10,
                 "xi_0": 1.94e-10,
-                "v": 0.63,
+                "nu": 0.63,
                 "gamma": 1.239,
                 "big_gamma": 0.0496,
                 "R": 1.03

@@ -209,7 +209,7 @@ def main(dry_run=False):
     we.add(
         {
             "viscosity": viscosity_rule,
-            "thermal_conductivity": thermal_conductivity_rule,
+            # "thermal_conductivity": thermal_conductivity_rule,
         }
     )
     we.write(dry_run=dry_run)

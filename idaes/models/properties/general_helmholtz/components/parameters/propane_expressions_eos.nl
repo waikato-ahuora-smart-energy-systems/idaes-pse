@@ -1,4 +1,4 @@
-g3 1 1 0	# problem unknown
+g3 1 1 0	# problem propane
  2 0 14 0 0 	# vars, constraints, objectives, ranges, eqns
  0 13 0 0 0 0	# nonlinear constrs, objs; ccons: lin, nonlin, nd, nzlb
  0 0	# network constraints: nonlinear, linear

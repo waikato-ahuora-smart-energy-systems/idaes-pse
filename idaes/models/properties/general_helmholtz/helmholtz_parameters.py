@@ -18,6 +18,7 @@ import logging
 import json
 import numpy
 import pyomo.environ as pyo
+import sympy
 
 from idaes.models.properties.general_helmholtz.expressions import (
     phi_ideal_modular_parts,
@@ -250,13 +251,20 @@ class WriteParameters(object):
                     )
 
         #Check if using predefined thermal conductivity expression
-        tcx_parameters = parameters["transport"]["thermal_conductivity"].get("expressions", None)
-        if tcx_parameters is not None:
-            tcx_expression = 0
-            for tcx_term in tcx_parameters:
-                tcx_cont = tcx_types[tcx_term["type"]](model = self.model, parameters=tcx_term)
-                tcx_expression = tcx_expression + tcx_cont
-            self.add({"thermal_conductivity": tcx_expression})
+        try:
+            tcx_parameters = parameters["transport"]["thermal_conductivity"].get("expressions", None)
+            tcx_form = parameters["transport"]["thermal_conductivity"].get("form", None)
+            if tcx_parameters is not None:
+                expressions = {}
+                tcx_expression = 0
+                for tcx_term in tcx_parameters:
+                    tcx_cont = tcx_types[tcx_term["type"]](model = self.model, parameters=tcx_term)
+                    expressions.update(tcx_cont)
+                tcx_expression = eval(tcx_form, {"__builtins__":{}}, expressions)
+                self.add({"thermal_conductivity": tcx_expression})
+        except KeyError: # No thermal conductivity to add
+            print("sdasd")
+            pass
         # Check if using predefined surface tension expression
         try:
             etype = parameters["transport"]["surface_tension"]["type"]
