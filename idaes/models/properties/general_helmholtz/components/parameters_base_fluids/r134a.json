@@ -1,0 +1,260 @@
+{
+    "comp": "r134a",
+    "basic": {
+        "R": 8.14888564372e-2,
+        "MW": 102.032,
+        "T_star": 374.18,
+        "rho_star": 508.0,
+        "Tc": 374.21,
+        "rhoc": 511.89995169599996,
+        "Pc": 4059.28,
+        "Tt": 169.85,
+        "Pt": 0.391,
+        "rhot_l": 1591.1,
+        "rhot_v": 0.028172,
+        "P_min": 1e-9,
+        "P_max": 7e4,
+        "rho_max": 2500.0,
+        "T_min": 168,
+        "T_max": 460
+    },
+    "eos": {
+        "reference": [
+            "Tillner-Roth, R.; Baehr, H.D., An International Standard Formulation for the",
+            "    Thermodynamic Properties of 1,1,1,2-Tetrafluoroethane (HFC-134a) for",
+            "    Temperatures from 170 K to 455 K and Pressures up to 70 MPa, J. Phys. Chem.",
+            "    Ref. Data, 1994, 23, 5, 657-729, https://doi.org/10.1063/1.555958"
+        ],
+        "ideal_terms":[
+            {"ideal_type":1,
+            "a":[
+                -1.019535,
+                9.047135
+            ]
+        },
+            {"ideal_type":2,
+            "a":-1.629789
+        },
+            {"ideal_type":7,
+            "n": [
+            -9.723916,
+            -3.92717
+          ],
+          "t": [
+            -0.5,
+            -0.75
+          ]
+        }
+        ],
+        "residual_terms":[
+            {"residual_type":1,
+            "d": [
+            2,
+            1,
+            3,
+            6,
+            6,
+            1,
+            1,
+            2
+          ],
+          "n": [
+            0.05586817,
+            0.498223,
+            0.02458698,
+            0.0008570145,
+            0.0004788584,
+            -1.800808,
+            0.2671641,
+            -0.04781652
+          ],
+          "t": [
+            -0.5,
+            0,
+            0,
+            0,
+            1.5,
+            1.5,
+            2,
+            2
+          ]
+        },
+        {"residual_type":7,
+            "d": [
+            5,
+            2,
+            2,
+            4,
+            1,
+            4,
+            1,
+            2,
+            4,
+            1,
+            5,
+            3,
+            10
+          ],
+          "l": [
+            1,
+            1,
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            4
+          ],
+          "n": [
+            0.01423987,
+            0.3324062,
+            -0.007485907,
+            0.0001017263,
+            -0.5184567,
+            -0.08692288,
+            0.2057144,
+            -0.005000457,
+            0.0004603262,
+            -0.003497836,
+            0.006995038,
+            -0.01452184,
+            -0.0001285458
+          ],
+          "t": [
+            1,
+            3,
+            5,
+            1,
+            5,
+            5,
+            6,
+            10,
+            10,
+            10,
+            18,
+            22,
+            50
+          ],
+          "g":[
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }      
+        ]
+    },
+    "aux": {
+        "reference": [
+            "Tillner-Roth, R.; Baehr, H.D., An International Standard Formulation for the",
+            "    Thermodynamic Properties of 1,1,1,2-Tetrafluoroethane (HFC-134a) for",
+            "    Temperatures from 170 K to 455 K and Pressures up to 70 MPa, J. Phys. Chem.",
+            "    Ref. Data, 1994, 23, 5, 657-729, https://doi.org/10.1063/1.555958"
+        ],
+        "delta_l_sat_approx": {
+            "c": 1.0200787401574805,
+            "n": {
+                "1": 1.7404133858267716,
+                "2": 0.9563779527559054,
+                "3": 0.38049212598425197
+            },
+            "t": {
+                "1": 0.333333333333333333,
+                "2": 0.666666666666666666,
+                "3": 3.333333333333333333
+            },
+            "type": 1
+        },
+        "delta_v_sat_approx": {
+            "c": 1.0174409448818897,
+            "n": {
+                "1": -2.837294,
+                "2": -7.875988,
+                "3": 4.478586,
+                "4": -14.140125,
+                "5": -52.361297
+            },
+            "t": {
+                "1": 0.333333333333333333,
+                "2": 0.666666666666666666,
+                "3": 0.50,
+                "4": 2.25,
+                "5": 5.50
+            },
+            "type": 2
+        }
+    },
+    "transport": {
+        "surface_tension": {
+            "reference": [
+                "Mulero, A., I. Cachadina, Parra, M., Recommended Correlations for the",
+                "    Surface Tension of Common Fluids, J. Phys. Chem. Ref. Data 41, 043105",
+                "     (2012)."
+            ],
+            "Tc": 374.21,
+            "s": {"0": 58.01},
+            "n": {"0": 1.241},
+            "type": 1
+        },
+        "thermal_conductivity": {
+            "reference": [
+                "Perkins, R.A.; Laesecke, A.; Howley, J.; Ramires, M.L.V.; Gurova, A.N.; Cusco, L.,",
+                "    Experimental thermal conductivity values for the IUPAC round-robin sample of",
+                "    1,1,1,2-tetrafluoroethane (R134a), NIST Interagency/Internal Report (NISTIR)",
+                "    - 6605, 2000, https://doi.org/10.6028/NIST.IR.6605."
+            ],
+                       "form": "l0+lr+lc",
+            "expressions":[
+                {"type": 1,
+                "a":[
+                    -1.05248e-2,
+                    1.64602e-2
+                ]
+            },
+                {"type": 3,
+                "b1":[
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "b2":[
+                    3.77406e-3,
+                    1.05342e-2,
+                    -2.95279e-3,
+                    3.04691e-3
+                ]
+            },  
+                {"type": 6,
+                "qd": 5.2853564e-10,
+                "xi_0": 1.94e-10,
+                "nu": 0.63,
+                "gamma": 1.239,
+                "big_gamma": 0.0496,
+                "R": 0.63
+            }
+            ]
+        },
+        "viscosity": {
+            "reference": [
+                "Mulero, A., I. Cachadina, Parra, M., Recommended Correlations for the",
+                "    Surface Tension of Common Fluids, J. Phys. Chem. Ref. Data 41, 043105",
+                "     (2012)."
+            ]
+        }
+    }
+}

@@ -23,35 +23,28 @@
         1000
     ],
     "param": {
-        "R": 0.14305157,
+        "R": 0.1430515706563069,
         "MW": 58.1222,
         "T_star": 407.81,
         "rho_star": 225.5,
         "Tc": 407.81,
         "rhoc": 225.5,
-        "Pc": 3638.4956439666867,
+        "Pc": 3628.999980359347,
         "Tt": 113.73,
-        "Pt": 2.19e-05,
-        "rhot_l": 740.339,
-        "rhot_v": 1.41e-06,
-        "P_min": 1e-09,
-        "P_max": 1100000.0,
-        "rho_max": 1250.0,
-        "T_min": 235,
-        "T_max": 1300,
+        "Pt": 2.2890839011893838e-05,
+        "rhot_l": 740.338756293322,
+        "rhot_v": 1.4069890991060714e-06,
+        "P_min": 1e-05,
+        "P_max": 35000.0,
+        "rho_max": 245.21397088041655,
+        "T_min": 113.73,
+        "T_max": 575,
         "reference_state_offset": [
             0.0,
             0.0
         ]
     },
     "have_tcx": false,
-    "nl_file_st": "isobutane_expressions_st.nl",
-    "var_map_st": [
-        1,
-        1000,
-        1000,
-        1000
-    ],
-    "have_st": true,
+    "have_st": false,
     "have_visc": false
 }

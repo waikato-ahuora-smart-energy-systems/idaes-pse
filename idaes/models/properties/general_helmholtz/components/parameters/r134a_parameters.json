@@ -23,49 +23,28 @@
         1000
     ],
     "param": {
-        "R": 0.0814888564372,
+        "R": 0.08148885643719617,
         "MW": 102.032,
         "T_star": 374.18,
-        "rho_star": 508.0,
-        "Tc": 374.21,
-        "rhoc": 511.89995169599996,
-        "Pc": 4059.111498497894,
+        "rho_star": 508.0000000074721,
+        "Tc": 374.18,
+        "rhoc": 508.0000000074721,
+        "Pc": 4056.616062793703,
         "Tt": 169.85,
-        "Pt": 0.391,
-        "rhot_l": 1591.1,
-        "rhot_v": 0.028172,
-        "P_min": 1e-09,
+        "Pt": 0.38956378856198953,
+        "rhot_l": 1591.1074531655113,
+        "rhot_v": 0.028172288370165798,
+        "P_min": 1e-05,
         "P_max": 70000.0,
-        "rho_max": 2500.0,
-        "T_min": 168,
-        "T_max": 460,
+        "rho_max": 705.0704226213938,
+        "T_min": 169.85,
+        "T_max": 455,
         "reference_state_offset": [
             0.0,
             0.0
         ]
     },
-    "nl_file_tcx": "r134a_expressions_tcx.nl",
-    "var_map_tcx": [
-        1,
-        0,
-        1000,
-        1000
-    ],
-    "have_tcx": true,
-    "nl_file_st": "r134a_expressions_st.nl",
-    "var_map_st": [
-        1,
-        1000,
-        1000,
-        1000
-    ],
-    "have_st": true,
-    "nl_file_visc": "r134a_expressions_visc.nl",
-    "var_map_visc": [
-        0,
-        1,
-        1000,
-        1000
-    ],
-    "have_visc": true
+    "have_tcx": false,
+    "have_st": false,
+    "have_visc": false
 }

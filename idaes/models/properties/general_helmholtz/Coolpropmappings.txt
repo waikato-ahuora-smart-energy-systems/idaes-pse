@@ -1,0 +1,33 @@
+For each of the .json files within the directory coolprop_fluids, write a file with the same name in the directory idaes_fluid_set.
+The format of this new file should match the structure found within compound json files found in the components/parameters directory.
+Mappings of properties are as follows:
+"comp" should be the name of the compound.
+for the "basic" properties in the new version, 
+Tc, Pc, rhoc can be found in the original file under "STATES":"critical", "T", "P", and "rhomolar"
+Tt and Pt can be found under "States":"triple_liquid"
+"EOS" in the original file provides the following.
+"R" is "gas_constant"
+"MW" is "molar_mass"
+"T_max" and "p_max" have the same name.
+"rhot_l" and "rhot_v" can be found as "rhomolar" in "EOS":"STATES" "sat_min_liquid" and "sat_min_vapour" respectively.
+"T_star" and "rho_star" can be found under "EOS":"STATES""reducing" as "T" and "rhomolar"
+"rho_max" can be found as "EOS":"critical_region_splines":"rhomolar_max"
+"T_min" can be set to the triple point temperature.
+"P_min" can be set to 1e-5.
+Ensure that all properties are in the correct unit set, outlined below.
+R should be in kJ/kg/K
+MW should be in g/mol
+temperatures should be in K
+Pressures should be in kPa
+density should be in kg/cubic meter.
+convert any values to their equivalent in the correct unit as required.
+
+Transponse properties as required to populate the "ideal_terms" and "residual_terms" from the "EOS":"alpha0" and "EOS":"alphar" properties of the original file.
+type mappings can be found in the expressions/__init__.py file.
+There are some differences that should be considered.
+The original formulation for residual power should be broken into two parts.
+The new power formulation has no "l" coefficient. Each coefficient in the original form where "l" is 0 should be power.
+Each other value where "l" is not 0 should be attributed to type 7.
+if there is no "g" coefficient listed for power, then it should be assigned a value of 1 for all values in type 7.
+
+If there is any confusion around other formulations or expression types, make a list of the files that this stems from and present them with an explanation of the problem.

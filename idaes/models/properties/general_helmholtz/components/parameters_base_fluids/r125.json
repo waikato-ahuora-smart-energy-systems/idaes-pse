@@ -1,0 +1,235 @@
+{
+    "comp": "r125",
+    "basic": {
+        "R": 0.06927490430873161,
+        "MW": 120.0214,
+        "T_star": 339.173,
+        "rho_star": 573.5822706,
+        "Tc": 339.173,
+        "rhoc": 573.5822706,
+        "Pc": 3617.7,
+        "Tt": 172.52,
+        "Pt": 2.914,
+        "rhot_l": 0.2446036132,
+        "rhot_v": 1690.6214404,
+        "P_min": 1e-9,
+        "P_max": 7e4,
+        "rho_max": 2500.0,
+        "T_min": 130,
+        "T_max": 450
+    },
+    "eos": {
+        "reference": [
+            "Lemmon, E.W., R.T. Jacobsen. A New Functional Form and New Fitting Techniques",
+            "    for Equations of State with Application to Pentafluoroethane (HFC-125),",
+            "    J. Phys. Chem. Ref. Data, Vol. 34, No. 1, 2005"
+        ],
+        "ideal_terms":[
+            {"ideal_type":1,
+            "a":[
+                37.2674,
+                8.88404
+            ]
+        },
+            {"ideal_type":2,
+            "a":-1
+        },
+            {"ideal_type":6,
+            "n": [
+            -49.8651
+            ],
+            "t": [
+                -0.1
+            ]
+        },
+            {"ideal_type":3,
+            "n": [
+            2.303,
+            5.086,
+            7.3
+            ],
+            "t": [
+                0.92578,
+                2.22895,
+                5.03283
+            ]
+        }
+        ],
+        "residual_terms":[
+            {"residual_type":1,
+            "d": [
+            1,
+            1,
+            1,
+            2,
+            4
+          ],
+          "n": [
+            5.28076,
+            -8.67658,
+            0.7501127,
+            0.7590023,
+            0.01451899
+          ],
+          "t": [
+            0.669,
+            1.05,
+            2.75,
+            0.956,
+            1
+          ]
+        },     
+            {"residual_type":7,
+             "d": [
+            1,
+            1,
+            2,
+            2,
+            3,
+            4,
+            5,
+            1,
+            5,
+            1
+          ],
+          "l": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            2,
+            3
+          ],
+          "g": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "n": [
+            4.777189,
+            -3.330988,
+            3.775673,
+            -2.290919,
+            0.8888268,
+            -0.6234864,
+            -0.04127263,
+            -0.08455389,
+            -0.1308752,
+            0.008344962
+          ],
+          "t": [
+            2,
+            2.75,
+            2.38,
+            3.37,
+            3.47,
+            2.63,
+            3.45,
+            0.72,
+            4.23,
+            0.2
+          ]
+        },
+        {"residual_type":5,
+        "d": [
+            2,
+            3,
+            5
+          ],
+          "l": [
+            2,
+            3,
+            3
+          ],
+          "m": [
+            1.7,
+            7,
+            6
+          ],
+          "n": [
+            -1.532005,
+            -0.05883649,
+            0.02296658
+          ],
+          "t": [
+            4.5,
+            29,
+            24
+          ]
+        }
+           
+        ]
+    },
+    "aux": {
+        "reference": [
+            "Lemmon, E.W., R.T. Jacobsen. A New Functional Form and New Fitting Techniques",
+            "    for Equations of State with Application to Pentafluoroethane (HFC-125),",
+            "    J. Phys. Chem. Ref. Data, Vol. 34, No. 1, 2005"
+        ],
+        "delta_l_sat_approx": {
+            "c": 1,
+            "n": {
+                "1": 1.6684,
+                "2": 0.88415,
+                "3": 0.44383
+            },
+            "t": {
+                "1": 0.3333333333333333,
+                "2": 0.6,
+                "3": 2.9
+            },
+            "type": 1
+        },
+        "delta_v_sat_approx": {
+            "c": 1,
+            "n": {
+                "1": -2.8403,
+                "2": -7.2738,
+                "3": -21.890,
+                "4": -58.825
+            },
+            "t": {
+                "1": 0.38,
+                "2": 1.22,
+                "3": 3.3,
+                "4": 6.9
+            },
+            "type": 2
+        }
+    },
+    "transport": {
+        "thermal_conductivity": {
+
+        },
+        "viscosity": {
+
+        },
+        "surface_tension": {
+            "reference": [
+                "Mulero, A., I. Cachadina, Parra, M., Recommended Correlations for the",
+                "    Surface Tension of Common Fluids, J. Phys. Chem. Ref. Data 41, 043105",
+                "     (2012)."
+            ],
+            "Tc": 339.173,
+            "s": {
+                "0": 52.52
+            },
+            "n": {
+                "0": 1.237
+            },
+            "type": 1
+        }
+    }
+
+}
